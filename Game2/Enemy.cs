@@ -15,47 +15,37 @@ namespace Game2
         private double _resistanceMagic;
         private double _resistancePhysical;
         private double _damage;
+        
+        public Enemy() { }
 
-        public string Name
+        public Enemy(string name,  double level, double damage)
         {
-            get => _name;
-            set => _name = value;
+            Name = name;
+            HitPointsMax = 1000;
+            HitPoints = HitPointsMax;
+            Level = level;
+            ResistanceMagic = 0;
+            ResistancePhysical = 0;
+            Damage = damage;
         }
 
-        public double HitPoints
-        {
-            get => _hitPoints;
-            set => _hitPoints = value;
-        }
 
-        public double HitPointsMax
-        {
-            get => _hitPointsMax;
-            set => _hitPointsMax = value;
-        }
+        public string Name { get => _name; set => _name = value; }
+        public double HitPoints { get => _hitPoints; set => _hitPoints = value; }
+        public double HitPointsMax { get => _hitPointsMax; set => _hitPointsMax = value; }
+        public double Level { get => _level; set => _level = value; }
+        public double ResistanceMagic { get => _resistanceMagic; set => _resistanceMagic = value; }
+        public double ResistancePhysical { get => _resistancePhysical; set => _resistancePhysical = value; }
+        public double Damage { get => _damage; set => _damage = value; }
 
-        public double Level
+        public virtual void InfoEnemy()
         {
-            get => _level;
-            set => _level = value;
-        }
+            Console.WriteLine($"Монстр===============================");
+            Console.WriteLine($"|| Имя: {Name}");
+            Console.WriteLine($"|| Уровень: {Level}");
+            Console.WriteLine($"|| Здоровье: {HitPoints}/{HitPointsMax}");
+            Console.WriteLine($"|| Урон: {Damage}");
 
-        public double ResistanceMagic
-        {
-            get => _resistanceMagic;
-            set => _resistanceMagic = value;
-        }
-
-        public double ResistancePhysical
-        {
-            get => _resistancePhysical;
-            set => _resistancePhysical = value;
-        }
-
-        public double Damage
-        {
-            get => _damage;
-            set => _damage = value;
         }
     }
 }

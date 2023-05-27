@@ -26,11 +26,11 @@ namespace Game2.PlayerFile
         {
             Name = name;
             Level = level;
-            HitPointsMax = 1000;
+            HitPointsMax = 500;
             HitPoints = HitPointsMax;
             ResistanceMagic = 0;
             ResistancePhysical = 0;
-            Damage = 10;
+            Damage = 80;
             Experience = 0;
             ExperienceMax = Math.Round(100 * Math.Pow(Math.E, 0.5 * (level - 1)), 0);
             CritChance = 0.05;
@@ -50,9 +50,30 @@ namespace Game2.PlayerFile
         public double CritChance { get => _critChance; set => _critChance = value; }
         public double CritDamage { get => _critDamage; set => _critDamage = value; }
 
+        public virtual double Hit()
+        {
+            return Damage;
+        }
+
+        public void LevelUp()
+        {
+
+        }
+
+        public virtual void CheckLevel(double ex)
+        {
+            if(Experience + ex >= ExperienceMax)
+            {
+                ExperienceMax -= Experience;
+
+            }
+            else
+                Experience += ex;
+        }
+
         public virtual void InfoPlayer()
         {
-            Console.WriteLine($"======================================");
+            Console.WriteLine($"Игрок===============================");
             Console.WriteLine($"|| Имя: {Name}");
             Console.WriteLine($"|| Уровень: {Level}");
             Console.WriteLine($"|| Здоровье: {HitPoints}/{HitPointsMax}");
@@ -61,7 +82,6 @@ namespace Game2.PlayerFile
             Console.WriteLine($"|| Урон: {Damage}");
             Console.WriteLine($"|| Опыт: {Experience}/{ExperienceMax}");
             Console.WriteLine($"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}");
-            Console.WriteLine($"=======================================");
         }
     }
 }

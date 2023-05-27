@@ -16,15 +16,23 @@ namespace Game2.PlayerFile
             new HelpingMagicSkill("Лечебный мороз", 1, "Мог при использовании этого заклинания\n" +
                                                        "            Окружает себя прохладным ветром, который\n" +
                                                        "            замораживает раны, и боль утехает.",30 ,true),
+
+            new AttackingMagicSkill("Ледяные стрелы", 1, "маг создаёт 5 стрел, которые самоноводяться\n" +
+                                                         "          на врага.",35, 90),
             
-            new HelpingMagicSkill("Лядяной щит", 2, "В мгновение ока создаётледяной прозрачный щит \n" +
+            new HelpingMagicSkill("Лядяной щит", 1, "В мгновение ока создаётледяной прозрачный щит \n" +
                                                        "            Вокруг мага.",45 ,false,true),
-            
-            new HelpingMagicSkill("Кулакит льяда", 3, "Кулаки покрываются тонким, но очень прочным\n" +
+
+            new HelpingMagicSkill("Кулакит льяда", 1, "Кулаки покрываются тонким, но очень прочным\n" +
                                                        "            слоем льда.",75 ,false,false,true),
-            
-            new HelpingMagicSkill("Помощ ледяной девы", 50, "Дева одаривает мага своей силой.\n" +
+
+            new HelpingMagicSkill("Помощ ледяной девы", 1, "Дева одаривает мага своей силой.\n" +
                                                        "            Разум холодеет и реакция ускоряется.",900 ,false,false,false,true,true),
+
+            new AttackingMagicSkill("Ярость ледяной девы", 1 , "Маг призвает деву, которая только взглядом\n" +
+                                                          "         может зоморозить любого. Она в ярости и\n" +
+                                                          "         уничтожает всё на своём пути.",500,1000 ),
+
         };
         private List<string> _fireSkills = new List<string> { "", "", "", "", "" };
 
@@ -48,14 +56,16 @@ namespace Game2.PlayerFile
 
         public int NumberAvailableSkills()
         {
+            if (Level >= 8)
+                return 6;
             if (Level >= 6)
-                return 4;
+                return 5;
             if (Level >= 4)
-                return 3;
+                return 4;
             if (Level >= 2)
-                return 2;
+                return 3;
             else
-                return 1;
+                return 2;
         }
 
         public void ListMagicSkill()
@@ -75,7 +85,7 @@ namespace Game2.PlayerFile
             }
         }
 
-        public void UsageMagicSkill()
+        public double UsageMagicSkill()
         {
             Console.WriteLine("Какой навык: ");
             for (int i = 0; i < NumberAvailableSkills(); i++)
@@ -96,10 +106,24 @@ namespace Game2.PlayerFile
                     CritChance += helping.GainCritChanceUse();
                     CritDamage += helping.GainCritDamageUse();
                     helping.InfoSkill();
+                    return 0;
                 }
                 else
                     Console.WriteLine("нехватает маны");
+                return 0;
             }
+            else if (IseSkills[number] is AttackingMagicSkill attacking)
+            {
+                if (Mana - attacking.Price > 0)
+                {
+                    Mana -= attacking.Price;
+                    return attacking.MagicАttack();
+                }
+                else
+                    Console.WriteLine("нехватает маны");
+                return 0;
+            }
+            return 0;
         }
 
         public override void InfoPlayer()

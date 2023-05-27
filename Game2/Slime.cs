@@ -10,23 +10,28 @@ namespace Game2
     {
         private string _colorSlime;
 
-        public Slime(string name, int level, double damage, string color)
+        public Slime() { }
+
+        public Slime(string name, int level, double damage, string color) : base(name, level, damage)
         {
             Name = name;
             Level = level;
-            HitPointsMax = 1000;
+            HitPointsMax = 100 * level;
             HitPoints = HitPointsMax;
-            ResistanceMagic = 0;
-            ResistancePhysical = 0;
+            ResistanceMagic = 5;
+            ResistancePhysical = 5;
             Damage = damage;
             ColorSlime = color;
-            
         }
 
-        public string ColorSlime
+        public string ColorSlime { get => _colorSlime; set => _colorSlime = value; }
+
+        public override void InfoEnemy()
         {
-            get => _colorSlime;
-            set => _colorSlime = value;
+            base.InfoEnemy();
+            Console.WriteLine($"|| Цвет: {ColorSlime}");
+            Console.WriteLine("=====================================");
         }
-   }
+
+    }
 }

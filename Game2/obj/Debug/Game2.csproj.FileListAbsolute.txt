@@ -1,0 +1,7 @@
+C:\Users\ilyac\source\repos\Game2\bin\Debug\Game2.exe.config
+C:\Users\ilyac\source\repos\Game2\bin\Debug\Game2.exe
+C:\Users\ilyac\source\repos\Game2\bin\Debug\Game2.pdb
+C:\Users\ilyac\source\repos\Game2\obj\Debug\Game2.csproj.CoreCompileInputs.cache
+C:\Users\ilyac\source\repos\Game2\obj\Debug\Game2.exe
+C:\Users\ilyac\source\repos\Game2\obj\Debug\Game2.pdb
+C:\Users\ilyac\source\repos\Game2\obj\Debug\Game2.csproj.AssemblyReference.cache

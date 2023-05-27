@@ -38,7 +38,6 @@ namespace Game2
         {
             if (Healing)
             {
-                InfoSkill();
                 Console.WriteLine($"Вы востановили  {500 * Level} хп");
                 return 500 * Level;
             }
@@ -49,42 +48,38 @@ namespace Game2
         {
             if (Protection)
             {
-                InfoSkill();
                 Console.WriteLine($"Вы увеличили могическое сопротевление на {100 * Level}");
                 return 100 * Level;
             }
             return 0;
         }
 
-        public int GainDamageUse()
+        public double GainDamageUse()
         {
             if (GainDamage)
             {
-                InfoSkill();
                 Console.WriteLine($"Вы увеличили урон на {10 * Level}%");
-                return (10 * Level) / 100;
+                return 1+(double)(10 * Level) / 100;
             }
             return 1;
         }
 
-        public int GainCritChanceUse()
+        public double GainCritChanceUse()
         {
             if (GainCritChance)
             {
-                InfoSkill();
                 Console.WriteLine($"Вы увеличили шанс крита на  {Level}%");
-                return Level / 100;
+                return ((double)Level / 20);
             }
             return 0;
         }
 
-        public int GainCritDamageUse()
+        public double GainCritDamageUse()
         {
             if (GainCritDamage)
             {
-                InfoSkill();
                 Console.WriteLine($"Вы увеличили крит урон на  {10 * Level}%");
-                return (10 * Level) / 100;
+                return ((double)(10 * Level) / 100);
             }
             return 0;
         }
@@ -93,7 +88,7 @@ namespace Game2
         public override void InfoSkill()
         {
             base.InfoSkill();
-            Console.Write((Healing ? $"|| Тип: Лечение {1000 * Level} hp\n" : ""));
+            Console.Write((Healing ? $"|| Тип: Лечение {500 * Level} hp\n" : ""));
             Console.Write((Protection ? $"|| Тип: Защита\n" : ""));
             Console.Write((GainDamage ? $"|| Тип: Увеличение урона\n" : ""));
             Console.Write((GainCritChance ? $"|| Тип: Увеличение крит шанса\n" : ""));

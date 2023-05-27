@@ -8,5 +8,11 @@ namespace Game2
 {
     class AttackingMagicSkill : Skill
     {
+        private double _damage;
+
+        public AttackingMagicSkill()
+        {
+
+        }
     }
 }

@@ -16,15 +16,15 @@ namespace Game2.PlayerFile
             new HelpingMagicSkill("Лечебный мороз", 1, "Мог при использовании этого заклинания\n" +
                                                        "            Окружает себя прохладным ветром, который\n" +
                                                        "            замораживает раны, и боль утехает.",30 ,true),
-            new HelpingMagicSkill("Лечебный мороз1", 2, "Мог при использовании этого заклинания\n" +
-                                                       "            Окружает себя прохладным ветром, который\n" +
-                                                       "            замораживает раны, и боль утехает.",45 ,true),
-            new HelpingMagicSkill("Лечебный мороз2", 3, "Мог при использовании этого заклинания\n" +
-                                                       "            Окружает себя прохладным ветром, который\n" +
-                                                       "            замораживает раны, и боль утехает.",75 ,true),
-            new HelpingMagicSkill("Лечебный мороз3", 5, "Мог при использовании этого заклинания\n" +
-                                                       "            Окружает себя прохладным ветром, который\n" +
-                                                       "            замораживает раны, и боль утехает.",90 ,true),
+            
+            new HelpingMagicSkill("Лядяной щит", 2, "В мгновение ока создаётледяной прозрачный щит \n" +
+                                                       "            Вокруг мага.",45 ,false,true),
+            
+            new HelpingMagicSkill("Кулакит льяда", 3, "Кулаки покрываются тонким, но очень прочным\n" +
+                                                       "            слоем льда.",75 ,false,false,true),
+            
+            new HelpingMagicSkill("Помощ ледяной девы", 50, "Дева одаривает мага своей силой.\n" +
+                                                       "            Разум холодеет и реакция ускоряется.",900 ,false,false,false,true,true),
         };
         private List<string> _fireSkills = new List<string> { "", "", "", "", "" };
 
@@ -90,12 +90,15 @@ namespace Game2.PlayerFile
                 if (Mana - helping.Price > 0)
                 {
                     Mana -= helping.Price;
-                    HitPoints += helping.HealingUse();//////////////////////
+                    HitPoints = (HitPoints + helping.HealingUse() >= HitPointsMax ? HitPointsMax : HitPoints + helping.HealingUse());
                     ResistanceMagic += helping.ProtectionUse();
                     Damage *= helping.GainDamageUse();
                     CritChance += helping.GainCritChanceUse();
-                    CritDamage += helping.GainCritChanceUse();
+                    CritDamage += helping.GainCritDamageUse();
+                    helping.InfoSkill();
                 }
+                else
+                    Console.WriteLine("нехватает маны");
             }
         }
 

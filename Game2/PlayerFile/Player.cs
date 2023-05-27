@@ -30,7 +30,7 @@ namespace Game2.PlayerFile
             HitPoints = HitPointsMax;
             ResistanceMagic = 0;
             ResistancePhysical = 0;
-            Damage = 1;
+            Damage = 10;
             Experience = 0;
             ExperienceMax = Math.Round(100 * Math.Pow(Math.E, 0.5 * (level - 1)), 0);
             CritChance = 0.05;

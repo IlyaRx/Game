@@ -11,11 +11,13 @@ namespace Game2
     {
         static void Main(string[] args)
         {
-            Magician player = new Magician("Илья", 6, "лёд");
-            Slime slime = new Slime("pinky", 1, 1, "red");
-            player.UsageMagicSkill();
-            player.InfoPlayer();
-            Console.ReadKey();
+            Magician player = new Magician("Илья", 10, "лёд");
+            Slime slime = new Slime("pinky", 1, 10, "red");
+            do
+            {
+                player.UsageMagicSkill();
+                player.InfoPlayer();
+            } while (Console.ReadKey().Key != ConsoleKey.Escape);
         }
     }
 }

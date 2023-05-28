@@ -40,8 +40,6 @@ namespace Game2.PlayerFile
 
         public Magician(string name, int level, string direction) : base(name, level)
         {
-            HitPointsMax = Math.Round(1000 * Math.Pow(Math.E, 0.2 * (level - 1)));
-            HitPoints = HitPointsMax;
             ManaMax = Math.Round(100 * Math.Pow(Math.E, 0.3 * (level - 1)), 0);
             Mana = ManaMax;
             Direction = direction;
@@ -124,6 +122,16 @@ namespace Game2.PlayerFile
                 return 0;
             }
             return 0;
+        }
+
+        public override void LevelUp()
+        {
+            base.LevelUp();
+            double manaUp = Math.Round(100 * Math.Pow(Math.E, 0.3 * (Level - 1)), 0);
+            
+            Console.WriteLine($"Мана: {ManaMax} ===> {manaUp}");
+            ManaMax = manaUp;
+            Mana = ManaMax;
         }
 
         public override void InfoPlayer()

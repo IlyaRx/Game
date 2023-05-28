@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game2.PlayerFile
 {
-    class Player
+    abstract class Player
     {
         private string _name;//имя
         private double _hitPoints;//очки жизни
@@ -26,7 +26,7 @@ namespace Game2.PlayerFile
         {
             Name = name;
             Level = level;
-            HitPointsMax = 500;
+            HitPointsMax = Math.Round(1000 * Math.Pow(Math.E, 0.2 * (level - 1)));
             HitPoints = HitPointsMax;
             ResistanceMagic = 0;
             ResistancePhysical = 0;
@@ -55,17 +55,29 @@ namespace Game2.PlayerFile
             return Damage;
         }
 
-        public void LevelUp()
+        public virtual void LevelUp()
         {
+            Level++;
+            int pustLevel = Level - 1;
+            double exUp = Math.Round(100 * Math.Pow(Math.E, 0.5 * (Level - 1)), 0);
+            double hitUp = Math.Round(1000 * Math.Pow(Math.E, 0.2 * (Level - 1)));
 
+            Console.WriteLine($"Уровень: {pustLevel} ===> {Level}");
+            Console.WriteLine($"Опыт: {ExperienceMax} ===> {exUp}");
+            ExperienceMax = exUp;
+            Console.WriteLine($"Жизни: {HitPointsMax} ===> {hitUp}");
+            HitPointsMax = hitUp;
+            HitPoints = HitPointsMax;
         }
 
         public virtual void CheckLevel(double ex)
         {
             if(Experience + ex >= ExperienceMax)
             {
-                ExperienceMax -= Experience;
-
+                Experience += ex;
+                Experience -= ExperienceMax;
+                Console.WriteLine("Повышение уровня!!!");
+                LevelUp();
             }
             else
                 Experience += ex;

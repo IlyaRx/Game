@@ -8,12 +8,18 @@ namespace Game2.PlayerFile
 {
     abstract class ItemPlayer
     {
-        private int _level;
-        private double _rare; //редскость 
-        private double _addDamage;
-        private double _addResistanceMagic;
-        private double _addResistancePhysical;
-        
+        private string _name;
+        private string _rare; //редскость 
 
+        public ItemPlayer() { }
+
+        public ItemPlayer(string name, string rare)
+        {
+            Rare = rare;
+            Name = name;
+        }
+
+        public string Rare { get => _rare; set => _rare = value; }
+        public string Name { get => _name; set => _name = value; }
     }
 }

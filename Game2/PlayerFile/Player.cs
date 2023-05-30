@@ -19,7 +19,10 @@ namespace Game2.PlayerFile
         private double _experienceMax;//максимум опыта
         private double _critChance; // крит шанс
         private double _critDamage; // крит урон
-        private ItemPlayer _ttemPlayer; // 
+        private ItemCloth _itemPlayerCloth; // одежда защита
+        private ItemWeapon _itemPlayerWeapon; // оружие дамаг
+        private ItemDecoreion _itemPlayerDecoration; // украшение ку кш
+        private List<ItemPlayer> _inventory = new List<ItemPlayer>(10);
 
         public Player() { }
 
@@ -36,6 +39,9 @@ namespace Game2.PlayerFile
             ExperienceMax = Math.Round(100 * Math.Pow(Math.E, 0.5 * (level - 1)), 0);
             CritChance = 0.05;
             CritDamage = 0.5;
+            ItemPlayerCloth = null;
+            ItemPlayerDecoration = null;
+            ItemPlayerWeapon = null;
 
         }
 
@@ -50,15 +56,36 @@ namespace Game2.PlayerFile
         public double ExperienceMax { get => _experienceMax; set => _experienceMax = value; }
         public double CritChance { get => _critChance; set => _critChance = value; }
         public double CritDamage { get => _critDamage; set => _critDamage = value; }
+        internal ItemCloth ItemPlayerCloth { get => _itemPlayerCloth; set => _itemPlayerCloth = value; }
+        internal ItemWeapon ItemPlayerWeapon { get => _itemPlayerWeapon; set => _itemPlayerWeapon = value; }
+        internal ItemDecoreion ItemPlayerDecoration { get => _itemPlayerDecoration; set => _itemPlayerDecoration = value; }
+        internal List<ItemPlayer> Inventory { get => _inventory; set => _inventory = value; }
 
         public virtual double Hit()
         {
             return Damage;
         }
 
-        public virtual void AddItems()
+        public virtual void AddItems(ItemPlayer item)
         {
-
+            if(item is ItemCloth cloth)
+            {
+                ItemPlayerCloth = cloth;
+                ResistancePhysical += ItemPlayerCloth.AddResistancePhysical;
+                ResistanceMagic += ItemPlayerCloth.AddResistanceMagic; 
+            }
+            if(item is ItemWeapon weapon)
+            {
+                ItemPlayerWeapon = weapon;
+                Damage += ItemPlayerWeapon.AddDamage;
+            }
+            if (item is ItemDecoreion decoreion)
+            {
+                ItemPlayerDecoration = decoreion;
+                CritChance += ItemPlayerDecoration.AddCritChance;
+                CritDamage += ItemPlayerDecoration.AddCritDamage;
+            }
+            
         }
 
         public virtual void LevelUp()

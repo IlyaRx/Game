@@ -18,6 +18,7 @@ namespace Game2
             {
                 Magician player = new Magician("Илья", 1, "лёд");
                 Slime slime = new Slime("pinky", 1, 35, "red");
+
                 //do
                 //{
                 //} while (Console.ReadKey().Key != ConsoleKey.Escape);

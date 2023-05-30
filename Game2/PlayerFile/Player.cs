@@ -19,6 +19,7 @@ namespace Game2.PlayerFile
         private double _experienceMax;//максимум опыта
         private double _critChance; // крит шанс
         private double _critDamage; // крит урон
+        private ItemPlayer _ttemPlayer; // 
 
         public Player() { }
 
@@ -55,6 +56,11 @@ namespace Game2.PlayerFile
             return Damage;
         }
 
+        public virtual void AddItems()
+        {
+
+        }
+
         public virtual void LevelUp()
         {
             Level++;
@@ -85,15 +91,15 @@ namespace Game2.PlayerFile
 
         public virtual void InfoPlayer()
         {
-            Console.WriteLine($"Игрок===============================");
-            Console.WriteLine($"|| Имя: {Name}");
-            Console.WriteLine($"|| Уровень: {Level}");
-            Console.WriteLine($"|| Здоровье: {HitPoints}/{HitPointsMax}");
-            Console.WriteLine($"|| Магическая защита: {ResistanceMagic}");
-            Console.WriteLine($"|| Физическая защита: {ResistancePhysical}");
-            Console.WriteLine($"|| Урон: {Damage}");
-            Console.WriteLine($"|| Опыт: {Experience}/{ExperienceMax}");
-            Console.WriteLine($"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}");
+           Program.RedactorText($"Игрок===============================\n"
+           +$"|| Имя: {Name}\n"
+           +$"|| Уровень: {Level}\n"
+           +$"|| Здоровье: {HitPoints}/{HitPointsMax}\n"
+           +$"|| Магическая защита: {ResistanceMagic}\n"
+           +$"|| Физическая защита: {ResistancePhysical}\n"
+           +$"|| Урон: {Damage}\n"
+           +$"|| Опыт: {Experience}/{ExperienceMax}\n"
+           +$"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}\n");
         }
     }
 }

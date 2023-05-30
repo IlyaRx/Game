@@ -18,9 +18,9 @@ namespace Game2
             {
                 Magician player = new Magician("Илья", 1, "лёд");
                 Slime slime = new Slime("pinky", 1, 35, "red");
-                do
-                {
-                } while (Console.ReadKey().Key != ConsoleKey.Escape);
+                //do
+                //{
+                //} while (Console.ReadKey().Key != ConsoleKey.Escape);
                 Battle(player, slime);
                 Console.ReadKey();
             }
@@ -32,16 +32,19 @@ namespace Game2
             }
         }
 
-        private static void RedactorText(string text)
+        public static void RedactorText(string text)
         {
             int i = 0;
             foreach (var lettre in text)
             {
                 i++;
-                Thread.Sleep(60);
+                Thread.Sleep(10);
                 Console.Write(lettre);
-                if (i >= 100 && Convert.ToString(lettre) == " ")
+                if (i >= 200 && Convert.ToString(lettre) == " ")
+                {
                     Console.Write("\n");
+                    i = 0;
+                }
 
             }
         }

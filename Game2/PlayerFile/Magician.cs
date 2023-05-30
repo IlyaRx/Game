@@ -137,10 +137,10 @@ namespace Game2.PlayerFile
         public override void InfoPlayer()
         {
             base.InfoPlayer();
-            Console.WriteLine($"|| Тип игрока: Маг");
-            Console.WriteLine($"|| Мана: {Mana}/{ManaMax}");
-            Console.WriteLine($"|| Спецификация: {Direction}");
-            Console.WriteLine("====================================");
+            Program.RedactorText($"|| Тип игрока: Маг\n"
+            +$"|| Мана: {Mana}/{ManaMax}\n"
+            +$"|| Спецификация: {Direction}\n"
+            +"====================================\n");
         }
     }
 }

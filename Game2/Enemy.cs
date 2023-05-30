@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game2
 {
-    class Enemy
+    abstract class Enemy
     {
         private string _name;
         private double _hitPoints;
@@ -40,11 +40,11 @@ namespace Game2
 
         public virtual void InfoEnemy()
         {
-            Console.WriteLine($"Монстр===============================");
-            Console.WriteLine($"|| Имя: {Name}");
-            Console.WriteLine($"|| Уровень: {Level}");
-            Console.WriteLine($"|| Здоровье: {HitPoints}/{HitPointsMax}");
-            Console.WriteLine($"|| Урон: {Damage}");
+            Program.RedactorText($"Монстр===============================\n"
+            +$"|| Имя: {Name}\n"
+            +$"|| Уровень: {Level}\n"
+            +$"|| Здоровье: {HitPoints}/{HitPointsMax}\n"
+            +$"|| Урон: {Damage}\n");
 
         }
     }

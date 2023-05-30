@@ -12,3 +12,11 @@ C:\Users\ilyac\OneDrive\Документы\GitHub\Game\Game2\obj\Debug\Game2.csp
 C:\Users\ilyac\OneDrive\Документы\GitHub\Game\Game2\obj\Debug\Game2.csproj.CoreCompileInputs.cache
 C:\Users\ilyac\OneDrive\Документы\GitHub\Game\Game2\obj\Debug\Game2.exe
 C:\Users\ilyac\OneDrive\Документы\GitHub\Game\Game2\obj\Debug\Game2.pdb
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\bin\Debug\Game2.exe.config
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\bin\Debug\Game2.exe
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\bin\Debug\Game2.pdb
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\obj\Debug\Game2.csproj.AssemblyReference.cache
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\obj\Debug\Game2.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\obj\Debug\Game2.csproj.CoreCompileInputs.cache
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\obj\Debug\Game2.exe
+C:\Users\user\OneDrive\Рабочий стол\проект\Game\Game2\obj\Debug\Game2.pdb

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game2
 {
-    class Skill
+    abstract class Skill
     {
         private string _name;
         private int _level;

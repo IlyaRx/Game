@@ -13,7 +13,7 @@ namespace Game2.PlayerFile
 
         public ItemDecoreion() { }
 
-        public ItemDecoreion(string name, string rare, double addCritChance, double addCritDamage) : base(name,rare)
+        public ItemDecoreion(string name, string rare, double addCritChance = 0, double addCritDamage = 0) : base(name,rare)
         {
             AddCritChance = addCritChance;
             AddCritDamage = addCritDamage;

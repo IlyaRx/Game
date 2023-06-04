@@ -15,10 +15,11 @@ namespace Game2
         private double _resistanceMagic;
         private double _resistancePhysical;
         private double _damage;
+        private double _bustlevel;
         
         public Enemy() { }
 
-        public Enemy(string name,  double level, double damage)
+        public Enemy(string name, double level, double damage, double bustlevel)
         {
             Name = name;
             HitPointsMax = 1000;
@@ -27,6 +28,7 @@ namespace Game2
             ResistanceMagic = 0;
             ResistancePhysical = 0;
             Damage = damage;
+            Bustlevel = bustlevel;
         }
 
 
@@ -37,10 +39,11 @@ namespace Game2
         public double ResistanceMagic { get => _resistanceMagic; set => _resistanceMagic = value; }
         public double ResistancePhysical { get => _resistancePhysical; set => _resistancePhysical = value; }
         public double Damage { get => _damage; set => _damage = value; }
+        public double Bustlevel { get => _bustlevel; set => _bustlevel = value; }
 
         public virtual void InfoEnemy()
         {
-            Program.RedactorText($"Монстр===============================\n"
+            Console.WriteLine($"Монстр===============================\n"
             +$"|| Имя: {Name}\n"
             +$"|| Уровень: {Level}\n"
             +$"|| Здоровье: {HitPoints}/{HitPointsMax}\n"

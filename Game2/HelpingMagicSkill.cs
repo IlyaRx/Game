@@ -13,18 +13,16 @@ namespace Game2
         private bool _gainDamage;
         private bool _gainCritChance;
         private bool _gainCritDamage;
-        private int _price;
 
         public HelpingMagicSkill() { }
 
-        public HelpingMagicSkill(string name, int level, string description, int price, bool healing = false, bool protection = false, bool gainDamage = false, bool gainCritChance = false, bool gainCritDamage = false) : base(name, level, description)
+        public HelpingMagicSkill(string name, int level, string description, int price, bool healing = false, bool protection = false, bool gainDamage = false, bool gainCritChance = false, bool gainCritDamage = false) : base(name, level, description, price)
         {
             Healing = healing;
             Protection = protection;
             GainDamage = gainDamage;
             GainCritChance = gainCritChance;
             GainCritDamage = gainCritDamage;
-            _price = price;
         }
 
         public bool Healing { get => _healing; set => _healing = value; }
@@ -32,7 +30,6 @@ namespace Game2
         public bool GainDamage { get => _gainDamage; set => _gainDamage = value; }
         public bool GainCritChance { get => _gainCritChance; set => _gainCritChance = value; }
         public bool GainCritDamage { get => _gainCritDamage; set => _gainCritDamage = value; }
-        public int Price { get => _price; set => _price = value; }
 
         public int HealingUse()
         {

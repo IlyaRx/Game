@@ -15,16 +15,25 @@ namespace Game2.PlayerFile
         {
             new HelpingMagicSkill("Лечебный мороз", 1, "Мог при использовании этого заклинания\n" +
                                                        "            Окружает себя прохладным ветром, который\n" +
-                                                       "            замораживает раны, и боль утехает.",30 ,true),
+                                                       "            замораживает раны, и боль утехает.",25 ,true),
 
             new AttackingMagicSkill("Ледяные стрелы", 1, "маг создаёт 5 стрел, которые самоноводяться\n" +
-                                                         "          на врага.",35, 90),
+                                                         "          на врага.",20, 50),
             
+
             new HelpingMagicSkill("Лядяной щит", 1, "В мгновение ока создаётледяной прозрачный щит \n" +
                                                        "            Вокруг мага.",45 ,false,true),
 
+            new AttackingMagicSkill("Глыба льда", 1, "Создаёт над противником ледяную глыбу и роняет на\n" +
+                                                         "          на врага.",40, 80),
+
+
             new HelpingMagicSkill("Кулакит льяда", 1, "Кулаки покрываются тонким, но очень прочным\n" +
                                                        "            слоем льда.",75 ,false,false,true),
+
+            new AttackingMagicSkill("Ледяная пушка", 1, "Создаёт пушку на плече мага и выстеливает ледяной\n" +
+                                                         "          котречью во врага.",100, 100),
+           
 
             new HelpingMagicSkill("Помощ ледяной девы", 1, "Дева одаривает мага своей силой.\n" +
                                                        "            Разум холодеет и реакция ускоряется.",900 ,false,false,false,true,true),
@@ -34,7 +43,37 @@ namespace Game2.PlayerFile
                                                           "         уничтожает всё на своём пути.",500,1000 ),
 
         };
-        private List<string> _fireSkills = new List<string> { "", "", "", "", "" };
+        private List<Skill> _fireSkills = new List<Skill> {  
+            ////
+            new HelpingMagicSkill("Пламя Феникса", 1, "Маг на ход покрывается слоем пламени, который\n" +
+                                                       "              излечивает его раны.", 25 ,true),
+
+            new AttackingMagicSkill("Цветы Фенекса", 1 , "Во круг мага расцветают огенные лилии\n" +
+                                                          "         лепистки этих цветов оращаются.\n" +
+                                                          "         и летят в противника", 20 ,50 ),
+
+            /////
+            new HelpingMagicSkill("Кулак огненного дракона", 1 , "Кулаки и огружие покарываются огнём драконов\n" +
+                                                          "         и увеличивают урон.\n", 45 ,false, false,true),
+
+            new AttackingMagicSkill("Крылья огненного дракона", 1 , "За спиной мага появлявляется дво драконьих крыла,\n" +
+                                                          "         покрытых огнём, и со взмахом поджигают противника.",40,80 ),
+
+            /////
+            new HelpingMagicSkill("Чешуя дракона", 1, "Появляется огенный нагрудник который защищает от\n" +
+                                                       "             физ атак.", 75 ,false,true),
+
+            new AttackingMagicSkill("Рёв огенного дракона", 1 , "Игрок делает глубокий вдох и извергает изо\n" +
+                                                          "         рта драконье пламя.",100,100 ),
+
+            /////
+            new HelpingMagicSkill("Глаза дракона", 1 , "Игрок получает зркние дракона, что помогает определить\n" +
+                                                          "         слабые места противника.\n", 900,false,false,false,true,true),
+
+            new AttackingMagicSkill("Лик огненного дракона", 1 , "Маг создаёт из огня образ дракона,\n" +
+                                                          "         который атакует противника.\n",500,1000 ),
+
+        };
 
         public Magician() { }
 
@@ -43,6 +82,7 @@ namespace Game2.PlayerFile
             ManaMax = Math.Round(100 * Math.Pow(Math.E, 0.3 * (level - 1)), 0);
             Mana = ManaMax;
             Direction = direction;
+            Damage += 4;
         }
 
 
@@ -50,18 +90,16 @@ namespace Game2.PlayerFile
         public double ManaMax { get => _manaMax; set => _manaMax = value; }
         public string Direction { get => _direction; set => _direction = value; }
         internal List<Skill> IseSkills { get => _iseSkills; set => _iseSkills = value; }
-        public List<string> FireSkills { get => _fireSkills; set => _fireSkills = value; }
+        public List<Skill> FireSkills { get => _fireSkills; set => _fireSkills = value; }
 
         public int NumberAvailableSkills()
         {
-            if (Level >= 8)
-                return 6;
             if (Level >= 6)
-                return 5;
-            if (Level >= 4)
+                return 8;
+            else if (Level >= 4)
+                return 6;
+            else if (Level >= 2)
                 return 4;
-            if (Level >= 2)
-                return 3;
             else
                 return 2;
         }
@@ -79,7 +117,12 @@ namespace Game2.PlayerFile
             }
             else if (Direction == "огонь")
             {
-
+                Console.WriteLine("список доступных навыков:");
+                for (int i = 0; i < NumberAvailableSkills(); i++)
+                {
+                    Console.WriteLine($"\n№{i + 1}");
+                    FireSkills[i].InfoSkill();
+                };
             }
         }
 
@@ -89,7 +132,7 @@ namespace Game2.PlayerFile
             for (int i = 0; i < NumberAvailableSkills(); i++)
             {
                 Console.WriteLine($"\n№{i + 1}: ");
-                Console.Write(IseSkills[i].Name);
+                Console.Write(IseSkills[i].Name + $"/ Цена: {IseSkills[i].Price}");
             };
             Console.WriteLine("");
             int number = Convert.ToInt32(Console.ReadLine()) - 1;
@@ -115,7 +158,7 @@ namespace Game2.PlayerFile
                 if (Mana - attacking.Price > 0)
                 {
                     Mana -= attacking.Price;
-                    return attacking.MagicАttack();
+                    return attacking.MagicАttack() * FactorDamageMag;
                 }
                 else
                     Console.WriteLine("нехватает маны");
@@ -137,7 +180,7 @@ namespace Game2.PlayerFile
         public override void InfoPlayer()
         {
             base.InfoPlayer();
-            Program.RedactorText($"|| Тип игрока: Маг\n"
+            Console.WriteLine($"|| Тип игрока: Маг\n"
             +$"|| Мана: {Mana}/{ManaMax}\n"
             +$"|| Спецификация: {Direction}\n"
             +"====================================\n");

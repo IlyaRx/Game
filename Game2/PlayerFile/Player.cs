@@ -14,6 +14,7 @@ namespace Game2.PlayerFile
         private int _level;//уровень
         private double _resistanceMagic;//магиеское сопротевление
         private double _resistancePhysical;//физическое сопротевление
+        private double _factorDamageMag;//множитель маглической отаки
         private double _damage;//урон   
         private double _experience;//опты
         private double _experienceMax;//максимум опыта
@@ -34,7 +35,7 @@ namespace Game2.PlayerFile
             HitPoints = HitPointsMax;
             ResistanceMagic = 0;
             ResistancePhysical = 0;
-            Damage = 80;
+            Damage = 5;
             Experience = 0;
             ExperienceMax = Math.Round(100 * Math.Pow(Math.E, 0.5 * (level - 1)), 0);
             CritChance = 0.05;
@@ -42,6 +43,7 @@ namespace Game2.PlayerFile
             ItemPlayerCloth = null;
             ItemPlayerDecoration = null;
             ItemPlayerWeapon = null;
+            FactorDamageMag = 1;
 
         }
 
@@ -60,6 +62,7 @@ namespace Game2.PlayerFile
         internal ItemWeapon ItemPlayerWeapon { get => _itemPlayerWeapon; set => _itemPlayerWeapon = value; }
         internal ItemDecoreion ItemPlayerDecoration { get => _itemPlayerDecoration; set => _itemPlayerDecoration = value; }
         internal List<ItemPlayer> Inventory { get => _inventory; set => _inventory = value; }
+        public double FactorDamageMag { get => _factorDamageMag; set => _factorDamageMag = value; }
 
         public virtual double Hit()
         {
@@ -71,19 +74,21 @@ namespace Game2.PlayerFile
             if(item is ItemCloth cloth)
             {
                 ItemPlayerCloth = cloth;
-                ResistancePhysical += ItemPlayerCloth.AddResistancePhysical;
-                ResistanceMagic += ItemPlayerCloth.AddResistanceMagic; 
+                ResistancePhysical += ItemPlayerCloth.AddResistancePhysical * Level;
+                ResistanceMagic += ItemPlayerCloth.AddResistanceMagic * Level;
+                ResistanceMagic += ItemPlayerCloth.AddMana * Level;
             }
             if(item is ItemWeapon weapon)
             {
                 ItemPlayerWeapon = weapon;
-                Damage += ItemPlayerWeapon.AddDamage;
+                Damage += ItemPlayerWeapon.AddDamage * Level;
+                FactorDamageMag += ItemPlayerWeapon.AddDamageMag;
             }
             if (item is ItemDecoreion decoreion)
             {
                 ItemPlayerDecoration = decoreion;
-                CritChance += ItemPlayerDecoration.AddCritChance;
-                CritDamage += ItemPlayerDecoration.AddCritDamage;
+                CritChance += ItemPlayerDecoration.AddCritChance * Level;
+                CritDamage += ItemPlayerDecoration.AddCritDamage * Level;
             }
             
         }
@@ -118,7 +123,7 @@ namespace Game2.PlayerFile
 
         public virtual void InfoPlayer()
         {
-           Program.RedactorText($"Игрок===============================\n"
+           Console.WriteLine($"Игрок===============================\n"
            +$"|| Имя: {Name}\n"
            +$"|| Уровень: {Level}\n"
            +$"|| Здоровье: {HitPoints}/{HitPointsMax}\n"

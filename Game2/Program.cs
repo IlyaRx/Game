@@ -155,41 +155,58 @@ namespace Game2
             else
                 Console.WriteLine("капец ты лох. ты здох");
         }
+
+        static void Menu(Magician pl)
+        {
+            do
+            {
+                Console.Clear();
+                Console.WriteLine($"Bнформация о игроке: 1\n" +
+                                  $"Экиперовка: 2\n" +
+                                  $"Инвентарь: 3");
+                string kay = Console.ReadLine();
+                switch (kay)
+                {
+                    case "1":
+                        pl.InfoPlayer();
+                        break;
+                    case "2":
+                        pl.InfoEquip();
+                        break;
+                    case "3":
+                        pl.CheckInventory();
+                        break;
+                }
+                Console.WriteLine("для продолжения надимете любую клавишу...\n" +
+                                  "для выхлода из меню нажимете Esc...");
+            } while (Console.ReadKey().Key != ConsoleKey.Backspace);
+        }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         static void Main(string[] args)
         {
             try
             {
-                Magician player = new Magician("Илья", 1, "лёд");
+                Magician player = new Magician("Илья", 2, "лёд");
                 Slime slime = new Slime("pinky", 1, 35, "red");
 
-                player.InfoPlayer();
-                do
-                {
-                    //Battle(player, slime);
-                    //player.InfoPlayer();
-                    player.Inventory.Add(itemsCommon[1]);
-                    //player.CheckInventory();
-                    ////player.InfoPlayer();
-                    ////player.LevelUp();
-                    ////Console.WriteLine("//////////////////////////////////////////////////");
-                    //player.InfoPlayer();
-                    ////player.CheckInventory();
-                    //player.LevelUp();
-                    player.Inventory.Add(itemsLegendary[1]);
-                    player.Inventory.Add(itemsLegendary[2]);
-                    player.Inventory.Add(itemsLegendary[0]);
-                    player.Inventory.Add(itemsRare[1]);
-                    player.Inventory.Add(itemsRare[3]);
-                    player.Inventory.Add(itemsRare[12]);
-                    player.Inventory.Add(itemsRare[5]);
-                    player.Inventory.Add(itemsRare[10]);
-                    player.CheckInventory();
-                    player.CheckInventory();
-                    player.CheckInventory();
-                    player.CheckInventory();
-                } while (Console.ReadKey().Key != ConsoleKey.Escape);
-
+                player.AddItems(itemsCommon[2]);
+                player.AddItems(itemsCommon[7]);
+                player.AddItems(itemsCommon[12]);
+                Menu(player);
+                player.AddItems(itemsUncommon[2]);
+                player.AddItems(itemsUncommon[7]);
+                player.AddItems(itemsUncommon[12]);
+                Menu(player);
+                player.AddItems(itemsRare[2]);
+                player.AddItems(itemsRare[7]);
+                player.AddItems(itemsRare[12]);
+                Menu(player);
+                player.AddItems(itemsLegendary[0]);
+                player.AddItems(itemsLegendary[1]);
+                player.AddItems(itemsLegendary[2]);
+                Menu(player);
+                BattleMag(player, slime);
 
                 Console.ReadKey();
             }

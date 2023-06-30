@@ -208,6 +208,41 @@ namespace Game2.PlayerFile
                 Experience += ex;
         }
 
+        public virtual void InfoEquip()
+        {
+            Console.WriteLine("-----------------------------------------");
+            if (ItemPlayerCloth != null)
+            {
+                Console.Write($"|| Название: {ItemPlayerCloth.Name} \n"
+                                + $"|| Редклсть: {ItemPlayerCloth.Rare} \n");
+                Console.WriteLine($"|| + физ. защите: {ItemPlayerCloth.AddResistancePhysical * Level} \n"
+                                + $"|| + маг. защите: {ItemPlayerCloth.AddResistanceMagic * Level}\n");
+            }
+            else
+                Console.WriteLine("Нет одежды");
+
+            if (ItemPlayerWeapon != null)
+            {
+                Console.Write($"|| Название: {ItemPlayerWeapon.Name} \n"
+                                + $"|| Редклсть: {ItemPlayerWeapon.Rare} \n");
+                Console.WriteLine($"|| + урона: {ItemPlayerWeapon.AddDamage * Level}\n"
+                                + $"|| + маг. урона: {ItemPlayerWeapon.AddDamageMag}\n");
+            }
+            else
+                Console.WriteLine("Нет оружия");
+
+            if (ItemPlayerDecoration != null)
+            {
+                Console.Write($"|| Название: {ItemPlayerDecoration.Name} \n"
+                                + $"|| Редклсть: {ItemPlayerDecoration.Rare} \n");
+                Console.WriteLine($"|| + крит. шанс {ItemPlayerDecoration.AddCritChance + Level}\n"
+                                + $"|| + крит. урон {ItemPlayerDecoration.AddCritDamage + Level}\n");
+            }
+            else
+                Console.WriteLine("Нет артифактов");
+
+            Console.WriteLine("-----------------------------------------");
+        }
 
         public virtual void InfoPlayer()
         {
@@ -219,24 +254,7 @@ namespace Game2.PlayerFile
                             + $"|| Физическая защита: {ResistancePhysical}\n"
                             + $"|| Урон: {Damage}\n"
                             + $"|| Опыт: {Experience}/{ExperienceMax}\n"
-                            + $"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}\n");
-
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine($"|| Название: {ItemPlayerCloth.Name} \n"
-                            + $"|| Редклсть: {ItemPlayerCloth.Rare} \n");
-            Console.WriteLine($"|| + физ. защите: {ItemPlayerCloth.AddResistancePhysical * Level} \n" 
-                            + $"|| + маг. защите: {ItemPlayerCloth.AddResistanceMagic * Level}");
-
-            Console.WriteLine($"|| Название: {ItemPlayerWeapon.Name} \n"
-                            + $"|| Редклсть: {ItemPlayerWeapon.Rare} \n");
-            Console.WriteLine($"|| + урона: {ItemPlayerWeapon.AddDamage * Level}\n" 
-                            + $"|| + маг. урона: {ItemPlayerWeapon.AddDamageMag}");
-
-            Console.WriteLine($"|| Название: {ItemPlayerDecoration.Name} \n"
-                             + $"|| Редклсть: {ItemPlayerDecoration.Rare} \n");
-            Console.WriteLine($"|| + крит. шанс {ItemPlayerDecoration.AddCritChance + Level}\n" 
-                            + $"|| + крит. урон {ItemPlayerDecoration.AddCritDamage + Level}");
-            Console.WriteLine("-----------------------------------------");
+                            + $"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}\n");  
         }
     }
 }

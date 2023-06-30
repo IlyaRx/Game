@@ -126,6 +126,12 @@ namespace Game2.PlayerFile
             }
         }
 
+        public override void DeleteItems(ItemPlayer item)
+        {
+            base.DeleteItems(item);
+            Damage += 4;
+        }
+
         public double UsageMagicSkill()
         {
             Console.WriteLine("Какой навык: ");

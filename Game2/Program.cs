@@ -12,49 +12,68 @@ namespace Game2
 {
     class Program
     {
-        List<ItemPlayer> itemsCommon = new List<ItemPlayer>()// до 15 ед  мана /2
+        static List<ItemPlayer> itemsCommon = new List<ItemPlayer>()
         {
-            new ItemCloth("Мантия ученика мага", "Обычная",5,1,10),
-            new ItemCloth("Кожанный костюм", "Обычная",3,11),
-            new ItemCloth("Походный костюм травника", "Обычная",10,1,5),
-            new ItemCloth("Какие то тряпки", "Обычная",1,3),
-            new ItemCloth("Несколько стоёв одежды кристьянина", "Обычная",0,6),
-            new ItemWeapon("Палка, вроде с магическая", "Обычная",3,0.2),
-            new ItemWeapon("Палка", "Обычная",9),
-            new ItemWeapon("Бита", "Обычная",13),
-            new ItemWeapon("Палочка ученика", "Обычная",0,0.3),
-            new ItemWeapon("Бита с гвоздями", "Обычная",15),
-            new ItemWeapon("Посох из дуба", "Обычная",2,0.5),
-            new ItemDecoreion("","",0.1,0.1),
+            new ItemCloth("Мантия ученика мага", "Обычный",5,1),
+            new ItemCloth("Кожанный костюм", "Обычный",6,11),
+            new ItemCloth("Походный костюм травника", "Обычный",10,4),
+            new ItemCloth("Какие то тряпки", "Обычный",1,3),
+            new ItemCloth("Несколько стоёв одежды кристьянина", "Обычный",0,6),
+            new ItemWeapon("Палка, вроде магическая", "Обычный",3,0.2),
+            new ItemWeapon("Палка", "Обычный",9),
+            new ItemWeapon("Бита", "Обычный",13),
+            new ItemWeapon("Палочка ученика", "Обычный",0,0.3),
+            new ItemWeapon("Бита с гвоздями", "Обычный",15),
+            new ItemWeapon("Посох из дуба", "Обычный",2,0.5),
+            new ItemDecoreion("Медное кольцо","Обычный",0.02,0.06),
+            new ItemDecoreion("Медный браслет","Обычный",0.03,0.04),
+            new ItemDecoreion("Медная цепочка","Обычный",0.04,0.02),
+            new ItemDecoreion("Подвеска с трёхлистным клевером","Обычный",0.034,0.02),
         };
 
-        List<ItemPlayer> itemsUncommon = new List<ItemPlayer>()//от 15 до 20 ед. мана /2
+        static List<ItemPlayer> itemsUncommon = new List<ItemPlayer>()
         {
-
+            new ItemCloth("Защитная накидка ученика мага", "Необычный",10,2),
+            new ItemCloth("Плохая кольчуга", "Необычный",14,22),
+            new ItemCloth("Улучшеный походный костюм травника", "Необычный",20,15),
+            new ItemCloth("Какие то тряпки", "Необычный",2,6),
+            new ItemCloth("Дорогая одежда крестьянина", "Необычный",0,12),
+            new ItemWeapon("Палочка, вроде магическая", "Необычный",6,0.4),
+            new ItemWeapon("Железный меч", "Необычный",24),
+            new ItemWeapon("Железная бита", "Необычный",26),
+            new ItemWeapon("Хорошая бита с гвоздями", "Необычный",35),
+            new ItemWeapon("Посох из ясеня", "Необычный",8,0.5),
+            new ItemDecoreion("Железное кольцо","Необычный",0.025,0.12),
+            new ItemDecoreion("Железное браслет","Необычный",0.04,0.08),
+            new ItemDecoreion("Железное цепочка","Необычный",0.04,0.04),
+            new ItemDecoreion("Подвеска с трёхлистным клевером","Необычный",0.034,0.05),
         };
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        static void Main(string[] args)
+        static List<ItemPlayer> itemsRare = new List<ItemPlayer>()
         {
-            try
-            {
-                Magician player = new Magician("Илья", 15, "лёд");
-                Slime slime = new Slime("pinky", 1, 35, "red");
+            new ItemCloth("Мантия тёмного мага", "Редкий",20,4),
+            new ItemCloth("Почти новая кольчуга", "Редкий",20,44),
+            new ItemCloth("Плащь светлого мага", "Редкий",40,20),
+            new ItemCloth("Железная броня", "Редкий",4,40),
+            new ItemCloth("Железная броня с золотыми вставками", "Редкий",20,45),
+            new ItemWeapon("Палочка из бамбука зачарованного леса", "Редкий",12,0.8),
+            new ItemWeapon("Острый меч бывалго война", "Редкий",36),
+            new ItemWeapon("Тёмная коса", "Редкий",52),
+            new ItemWeapon("Палочка из серебряного древа","Редкий",0,1.2),
+            new ItemWeapon("Двуручный топор", "Редкий",60),
+            new ItemWeapon("Посох друида", "Редкий",20,2.3),
+            new ItemDecoreion("Сеоебренное кольцо","Редкий",0.05,0.05),
+            new ItemDecoreion("Сеоебренный браслет","Редкий",0.075,0.03),
+            new ItemDecoreion("Золотая цепочка","Редкий",0.055,0.08),
+            new ItemDecoreion("Подвеска с четырёхлистным клевером","Редкий",0.1,0.1),
+        };
 
-                //do
-                //{
-                //} while (Console.ReadKey().Key != ConsoleKey.Escape);
-                //Battle(player, slime);
-                player.InfoPlayer();
-                Console.ReadKey();
-            }
-            catch
-            {
-                Console.Clear();
-                Console.WriteLine("Вы выбрали другое значение.\n Попробуй снова!\n Нажмите на любую клавишу.");
-                Console.ReadKey();
-            }
-        }
+        static List<ItemPlayer> itemsLegendary = new List<ItemPlayer>()
+        {
+            new ItemCloth("Броня короля миров", "Легендарный",100,100),
+            new ItemWeapon("Экскалибур", "Легендарный",100,2),
+            new ItemDecoreion("Подвеска с пятилистным клевером","Легендарный",2,2),
+        };
 
         public static void RedactorText(string text)
         {
@@ -73,7 +92,7 @@ namespace Game2
             }
         }
 
-        public static void Battle(Magician player, Enemy enemy)
+        public static void BattleMag(Magician player, Enemy enemy)
         {
             Random chance = new Random();
             Console.WriteLine("Бой начался");
@@ -103,15 +122,17 @@ namespace Game2
                                                 (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
 
                             enemy.HitPoints -= maghit;
-                            Console.WriteLine($"Игрок сходил. {(maghit <= 0 ? "Ты не смог пробить броню " : "("+ Convert.ToString(maghit) + " маг. урона)")}");
+                            Console.WriteLine($"Игрок сходил. {(maghit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(maghit) + " маг. урона)")}");
                             break;
-                        case 3: break;
+                        case 3:
+                            Console.WriteLine("Игрок сходил и пропустил ход.");
+                            break;
                     }
 
                     RedactorText(". . .\n");
                     double enemyHit = (enemy.Damage <= player.ResistancePhysical ? 0 : enemy.Damage - player.ResistancePhysical);
                     player.HitPoints -= enemyHit;
-                    Console.WriteLine("Монстр ударил. " + (enemyHit <= 0 ? " И не смог пробить броню " :"(" + Convert.ToString(enemyHit) + " урона.)"));
+                    Console.WriteLine("Монстр ударил. " + (enemyHit <= 0 ? " И не смог пробить броню " : "(" + Convert.ToString(enemyHit) + " урона.)"));
                     player.InfoPlayer();
                     Console.WriteLine("");
                     enemy.InfoEnemy();
@@ -134,6 +155,52 @@ namespace Game2
             else
                 Console.WriteLine("капец ты лох. ты здох");
         }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static void Main(string[] args)
+        {
+            try
+            {
+                Magician player = new Magician("Илья", 1, "лёд");
+                Slime slime = new Slime("pinky", 1, 35, "red");
+
+                player.InfoPlayer();
+                do
+                {
+                    //Battle(player, slime);
+                    //player.InfoPlayer();
+                    player.Inventory.Add(itemsCommon[1]);
+                    //player.CheckInventory();
+                    ////player.InfoPlayer();
+                    ////player.LevelUp();
+                    ////Console.WriteLine("//////////////////////////////////////////////////");
+                    //player.InfoPlayer();
+                    ////player.CheckInventory();
+                    //player.LevelUp();
+                    player.Inventory.Add(itemsLegendary[1]);
+                    player.Inventory.Add(itemsLegendary[2]);
+                    player.Inventory.Add(itemsLegendary[0]);
+                    player.Inventory.Add(itemsRare[1]);
+                    player.Inventory.Add(itemsRare[3]);
+                    player.Inventory.Add(itemsRare[12]);
+                    player.Inventory.Add(itemsRare[5]);
+                    player.Inventory.Add(itemsRare[10]);
+                    player.CheckInventory();
+                    player.CheckInventory();
+                    player.CheckInventory();
+                    player.CheckInventory();
+                } while (Console.ReadKey().Key != ConsoleKey.Escape);
+
+
+                Console.ReadKey();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Вы выбрали другое значение.\n Попробуй снова!\n Нажмите на любую клавишу.");
+                Console.ReadKey();
+            }
+        }
+
     }
 }
 

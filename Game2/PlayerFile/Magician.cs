@@ -161,7 +161,7 @@ namespace Game2.PlayerFile
             }
             else if (IseSkills[number] is AttackingMagicSkill attacking)
             {
-                if (Mana - attacking.Price > 0)
+                if (Mana - attacking.Price >= 0)
                 {
                     Mana -= attacking.Price;
                     return attacking.MagicАttack() * FactorDamageMag;

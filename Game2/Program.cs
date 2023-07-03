@@ -178,7 +178,7 @@ namespace Game2
                         break;
                 }
                 Console.WriteLine("для продолжения надимете любую клавишу...\n" +
-                                  "для выхлода из меню нажимете Esc...");
+                                  "для выхлода из меню нажимете Backspace...");
             } while (Console.ReadKey().Key != ConsoleKey.Backspace);
         }
 
@@ -187,25 +187,25 @@ namespace Game2
         {
             try
             {
-                Magician player = new Magician("Илья", 2, "лёд");
+                Magician player = new Magician("Илья", 1, "лёд");
                 Slime slime = new Slime("pinky", 1, 35, "red");
 
                 player.AddItems(itemsCommon[2]);
                 player.AddItems(itemsCommon[7]);
                 player.AddItems(itemsCommon[12]);
                 Menu(player);
-                player.AddItems(itemsUncommon[2]);
-                player.AddItems(itemsUncommon[7]);
-                player.AddItems(itemsUncommon[12]);
-                Menu(player);
-                player.AddItems(itemsRare[2]);
-                player.AddItems(itemsRare[7]);
-                player.AddItems(itemsRare[12]);
-                Menu(player);
-                player.AddItems(itemsLegendary[0]);
-                player.AddItems(itemsLegendary[1]);
-                player.AddItems(itemsLegendary[2]);
-                Menu(player);
+                //player.AddItems(itemsUncommon[2]);
+                //player.AddItems(itemsUncommon[7]);
+                //player.AddItems(itemsUncommon[12]);
+                //Menu(player);
+                //player.AddItems(itemsRare[2]);
+                //player.AddItems(itemsRare[7]);
+                //player.AddItems(itemsRare[12]);
+                //Menu(player);
+                //player.AddItems(itemsLegendary[0]);
+                //player.AddItems(itemsLegendary[1]);
+                //player.AddItems(itemsLegendary[2]);
+                //Menu(player);
                 BattleMag(player, slime);
 
                 Console.ReadKey();

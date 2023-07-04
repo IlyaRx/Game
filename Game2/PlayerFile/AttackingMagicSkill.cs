@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game2
+namespace Game2.PlayerFile
 {
     class AttackingMagicSkill : Skill
     {
@@ -20,6 +20,13 @@ namespace Game2
         public double MagicАttack()
         {
             return Damage * Level;
+        }
+
+        public override void InfoSkill()
+        {
+            base.InfoSkill();
+            Console.WriteLine($"|| Урон: {MagicАttack()}");
+
         }
     }
 }

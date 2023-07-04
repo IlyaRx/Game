@@ -29,7 +29,7 @@ namespace Game2
         public override void InfoEnemy()
         {
             base.InfoEnemy();
-            Program.RedactorText($"|| Цвет: {ColorSlime}\n"
+            Console.WriteLine($"|| Цвет: {ColorSlime}\n"
             +"=====================================");
         }
 

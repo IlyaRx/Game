@@ -32,7 +32,7 @@ namespace Game2.PlayerFile
         {
             Name = name;
             Level = level;
-            HitPointsMax = Math.Round(1000 * Math.Pow(Math.E, 0.2 * (level - 1)));
+            HitPointsMax = Math.Round(500 * Math.Pow(Math.E, 0.2 * (level - 1)));
             HitPoints = HitPointsMax;
             ResistanceMagic = 0;
             ResistancePhysical = 0;
@@ -156,7 +156,7 @@ namespace Game2.PlayerFile
                     if (Inventory[Convert.ToInt32(kayNum) - 1] is ItemWeapon weapon)
                     {
                         Console.WriteLine($"|| + урона: {weapon.AddDamage * Level}\n" +
-                            $"|| + маг. урона: {weapon.AddDamageMag}");
+                            $"|| * маг. урона: {weapon.AddDamageMag}");
                     }
                     if (Inventory[Convert.ToInt32(kayNum) - 1] is ItemDecoreion decoreion)
                     {
@@ -200,9 +200,12 @@ namespace Game2.PlayerFile
             if (Experience + ex >= ExperienceMax)
             {
                 Experience += ex;
+                while(Experience > ExperienceMax)
+                {
                 Experience -= ExperienceMax;
                 Console.WriteLine("Повышение уровня!!!");
                 LevelUp();
+                }
             }
             else
                 Experience += ex;

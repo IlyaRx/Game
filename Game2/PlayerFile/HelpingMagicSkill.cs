@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game2
+namespace Game2.PlayerFile
 {
     class HelpingMagicSkill : Skill
     {
@@ -85,7 +85,7 @@ namespace Game2
         public override void InfoSkill()
         {
             base.InfoSkill();
-            Console.Write((Healing ? $"|| Тип: Лечение {500 * Level} hp\n" : ""));
+            Console.Write((Healing ? $"|| Тип: Лечение {250 * Level} hp\n" : ""));
             Console.Write((Protection ? $"|| Тип: Защита\n" : ""));
             Console.Write((GainDamage ? $"|| Тип: Увеличение урона\n" : ""));
             Console.Write((GainCritChance ? $"|| Тип: Увеличение крит шанса\n" : ""));

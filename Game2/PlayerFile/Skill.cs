@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game2
+namespace Game2.PlayerFile
 {
     abstract class Skill
     {
@@ -33,6 +33,7 @@ namespace Game2
             Console.WriteLine($"{Name}--------------------------------");
             Console.WriteLine($"|| Уровень заклинания: {Level}");
             Console.WriteLine($"|| Описние: {Description}");
+            Console.WriteLine($"|| Цена: {Price}");
         }
     }
 }

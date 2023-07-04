@@ -44,9 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttackingMagicSkill.cs" />
+    <Compile Include="PlayerFile\AttackingMagicSkill.cs" />
     <Compile Include="Enemy.cs" />
-    <Compile Include="HelpingMagicSkill.cs" />
+    <Compile Include="PlayerFile\Breserk.cs" />
+    <Compile Include="PlayerFile\HelpingMagicSkill.cs" />
     <Compile Include="PlayerFile\ItemCloth.cs" />
     <Compile Include="PlayerFile\ItemPlayer.cs" />
     <Compile Include="PlayerFile\ItemDecoreion.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="PlayerFile\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Skill.cs" />
+    <Compile Include="PlayerFile\Skill.cs" />
     <Compile Include="Slime.cs" />
   </ItemGroup>
   <ItemGroup>

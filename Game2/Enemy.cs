@@ -43,11 +43,13 @@ namespace Game2
 
         public virtual void InfoEnemy()
         {
-            Console.WriteLine($"Монстр===============================\n"
-            +$"|| Имя: {Name}\n"
-            +$"|| Уровень: {Level}\n"
-            +$"|| Здоровье: {HitPoints}/{HitPointsMax}\n"
-            +$"|| Урон: {Damage}\n");
+            Console.Write($"Монстр===============================\n");
+            Console.Write($"|| Имя: {Name}\n");
+            Console.Write($"|| Уровень: {Level}\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"|| Здоровье: {HitPoints}/{HitPointsMax}\n");
+            Console.ResetColor();
+            Console.Write($"|| Урон: {Damage}\n");
 
         }
     }

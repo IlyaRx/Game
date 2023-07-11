@@ -138,7 +138,7 @@ namespace Game2.PlayerFile
                    + $"|| Название: {Inventory[i].Name} \n"
                    + $"|| Редклсть: {Inventory[i].Rare} \n");
                 }
-                Console.WriteLine($"бать предмет: #номер предмета#\n" +
+                Console.WriteLine($"\nбать предмет: #номер предмета#\n" +
                                   $"Выйте из инвенторя: *");
                 string kayNum = Console.ReadLine();
                 if (kayNum == "*")
@@ -249,15 +249,21 @@ namespace Game2.PlayerFile
 
         public virtual void InfoPlayer()
         {
-            Console.WriteLine($"Игрок===============================\n"
-                            + $"|| Имя: {Name}\n"
-                            + $"|| Уровень: {Level}\n"
-                            + $"|| Здоровье: {HitPoints}/{HitPointsMax}\n"
-                            + $"|| Магическая защита: {ResistanceMagic}\n"
-                            + $"|| Физическая защита: {ResistancePhysical}\n"
-                            + $"|| Урон: {Damage}\n"
-                            + $"|| Опыт: {Experience}/{ExperienceMax}\n"
-                            + $"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}\n");  
+            Console.Write($"Игрок===============================\n");
+            Console.Write($"|| Имя: {Name}\n");
+            Console.Write($"|| Уровень: {Level}\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"|| Здоровье: {HitPoints}/{HitPointsMax}\n");
+            Console.ResetColor();
+            Console.Write($"|| Магическая защита: {ResistanceMagic}\n");
+            Console.Write($"|| Физическая защита: {ResistancePhysical}\n");
+            Console.Write($"|| Урон: {Damage}\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"|| Опыт: {Experience}/{ExperienceMax}\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"|| Крит шанс/урон: {CritChance * 100}/{CritDamage * 100}\n");
+            Console.ResetColor();
+
         }
     }
 }

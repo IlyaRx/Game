@@ -303,11 +303,16 @@ namespace Game2.PlayerFile
 
         public override void InfoPlayer()
         {
-            base.InfoPlayer();
-            Console.WriteLine($"|| Тип игрока: Маг\n"
-            + $"|| Мана: {Mana}/{ManaMax}\n"
-            + $"|| Спецификация: {Direction}\n"
-            + "====================================\n");
+            base.InfoPlayer();;
+            Console.Write($"|| Тип игрока: Маг\n");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.Write($"|| Мана: {Mana}/{ManaMax}");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($"{(Mana<=0?" !!!! Мана закончалась !!!" : "")} \n");
+            Console.ResetColor();
+            Console.Write($"|| Спецификация: {Direction}\n");
+            Console.Write("====================================\n");
         }
     }
 }

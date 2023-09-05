@@ -116,7 +116,7 @@ namespace Game2
                             double hit = (plHit <= enemy.ResistancePhysical ? 0 : plHit - enemy.ResistancePhysical) *
                                                   (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
                             enemy.HitPoints -= hit;
-                            Console.WriteLine($"Игрок сходил. ({(hit <= 0 ? " " : Convert.ToString(hit) + " физ. урона)")}");
+                            Console.WriteLine($"Игрок сходил. ({(hit <= 0 ? "Ты не смог пробить броню " : Convert.ToString(hit) + " физ. урона)")}");
                             break;
                         case 2:
                             double magicSkill = player.UsageMagicSkill();

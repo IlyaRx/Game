@@ -92,6 +92,49 @@ namespace Game2
             }
         }
 
+        private static ItemPlayer GetItemPlayer()
+        {
+            Random chance = new Random();
+            Console.WriteLine("Вы получили: ");
+            int chanceItem = chance.Next(1, 101);
+            if (chanceItem == 1)
+            {
+                int idItem = chance.Next(0, 3);
+                Console.Write($"\n"
+               + $"|| Название: {itemsLegendary[idItem].Name} \n"
+               + $"|| Редклсть: {itemsLegendary[idItem].Rare} \n");
+                return itemsLegendary[idItem];
+            }
+            else if (chanceItem <= 5)
+            {
+                int idItem = chance.Next(0, 15);
+                Console.Write($"\n"
+               + $"|| Название: {itemsRare[idItem].Name} \n"
+               + $"|| Редклсть: {itemsRare[idItem].Rare} \n");
+                return itemsRare[idItem];
+            }
+            else if (chanceItem <= 20)
+            {
+                int idItem = chance.Next(0, 14);
+                Console.Write($"\n"
+               + $"|| Название: {itemsUncommon[idItem].Name} \n"
+               + $"|| Редклсть: {itemsUncommon[idItem].Rare} \n");
+                return itemsUncommon[idItem];
+            }
+            else if (chanceItem <= 90)
+            {
+                int idItem = chance.Next(0, 15);
+                Console.Write($"\n"
+               + $"|| Название: {itemsCommon[idItem].Name} \n"
+               + $"|| Редклсть: {itemsCommon[idItem].Rare} \n");
+                return itemsCommon[idItem];
+            }
+            else
+            {
+                Console.WriteLine("\n Ты не получил предмет");
+                return null;
+            }
+        }
 
 
         public static void Battle(Magician player, Enemy enemy)
@@ -158,42 +201,79 @@ namespace Game2
             {
                 Console.WriteLine("Победил игрок");
                 player.CheckLevel(100 * enemy.Level * enemy.Bustlevel);
-                Console.WriteLine("Вы получили: ");
-                int chanceItem = chance.Next(1, 101);
-                if (chanceItem == 1)
+                player.Inventory.Add(GetItemPlayer());
+            }
+            else
+                Console.WriteLine("капец ты лох. ты здох");
+        }
+
+
+
+        public static void Battle(Berserk player, Enemy enemy)
+        {
+            Random chance = new Random();
+            Console.WriteLine("Бой начался");
+            while (player.HitPoints > 0 && enemy.HitPoints > 0)
+            {
+                try
                 {
-                    int idItem = chance.Next(0, 3);
-                    Console.Write($"\n"
-                   + $"|| Название: {itemsLegendary[idItem].Name} \n"
-                   + $"|| Редклсть: {itemsLegendary[idItem].Rare} \n");
-                    player.Inventory.Add(itemsLegendary[idItem]);
+
+                    Console.WriteLine("Ход игрока. Выберите действие.\n" +
+                                      "Физическая атака: 1\n" +
+                                      "Боевой навык: 2\n" +
+                                      "Пропустить ход: 3");
+
+                    Console.Write("--->");
+                    switch (Convert.ToInt32(Console.ReadLine()))
+                    {
+                        case 1:
+                            double plHit = player.Hit();
+                            double hit = (plHit <= enemy.ResistancePhysical ? 0 : plHit - enemy.ResistancePhysical) *
+                                                  (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
+                            enemy.HitPoints -= hit;
+                            Console.WriteLine($"Игрок сходил. ({(hit <= 0 ? "Ты не смог пробить броню " : Convert.ToString(hit) + " физ. урона)")}");
+                            break;
+                        case 2:
+                            double skill = player.UsageSkill();
+                            double skillHit = (skill <= enemy.ResistancePhysical ? 0 : skill - enemy.ResistancePhysical) *
+                                                (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
+
+                            enemy.HitPoints -= skillHit;
+                            Console.WriteLine($"Игрок сходил. {(skillHit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(skillHit) + " физ. урона)")}");
+                            break;
+                        case 3:
+                            Console.WriteLine("Игрок сходил и пропустил ход.");
+                            break;
+                    }
+
+                    RedactorText(". . .\n");
+                    if (chance.Next(1, 101) > 10)
+                    {
+                        double enemyHit = (enemy.Damage <= player.ResistancePhysical ? 0 : enemy.Damage - player.ResistancePhysical);
+                        player.HitPoints -= enemyHit;
+                        Console.WriteLine("Монстр ударил. " + (enemyHit <= 0 ? " И не смог пробить броню " : "(" + Convert.ToString(enemyHit) + " урона.)"));
+                    }
+                    else
+                        Console.WriteLine("Монстр промахнулся.");
+                    player.InfoPlayer();
+                    Console.WriteLine("");
+                    enemy.InfoEnemy();
+                    Console.ReadKey();
+                    Console.Clear();
                 }
-                else if (chanceItem <= 5)
+                catch
                 {
-                    int idItem = chance.Next(0, 15);
-                    Console.Write($"\n"
-                   + $"|| Название: {itemsRare[idItem].Name} \n"
-                   + $"|| Редклсть: {itemsRare[idItem].Rare} \n");
-                    player.Inventory.Add(itemsRare[idItem]);
+                    Console.Clear();
+                    Console.WriteLine("Вы выбрали другое значение.\n Попробуй снова!\n Нажмите на любую клавишу.");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
-                else if (chanceItem <= 20)
-                {
-                    int idItem = chance.Next(0, 14);
-                    Console.Write($"\n"
-                   + $"|| Название: {itemsUncommon[idItem].Name} \n"
-                   + $"|| Редклсть: {itemsUncommon[idItem].Rare} \n");
-                    player.Inventory.Add(itemsUncommon[idItem]);
-                }
-                else if (chanceItem <= 90)
-                {
-                    int idItem = chance.Next(0, 15);
-                    Console.Write($"\n"
-                   + $"|| Название: {itemsCommon[idItem].Name} \n"
-                   + $"|| Редклсть: {itemsCommon[idItem].Rare} \n");
-                    player.Inventory.Add(itemsCommon[idItem]);
-                }
-                else
-                    Console.WriteLine("\n Ты не получил предмет");
+            }
+            if (enemy.HitPoints <= 0)
+            {
+                Console.WriteLine("Победил игрок");
+                player.CheckLevel(100 * enemy.Level * enemy.Bustlevel);
+                player.Inventory.Add(GetItemPlayer());
             }
             else
                 Console.WriteLine("капец ты лох. ты здох");
@@ -230,16 +310,47 @@ namespace Game2
             } while (Console.ReadKey().Key != ConsoleKey.Backspace);
         }
 
+        static void Menu(Berserk pl)
+        {
+            do
+            {
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine($"Информация о игроке: 1\n" +
+                                  $"Экиперовка: 2\n" +
+                                  $"Инвентарь: 3\n" +
+                                  $"Способности: 4");
+                string kay = Console.ReadLine();
+                switch (kay)
+                {
+                    case "1":
+                        pl.InfoPlayer();
+                        break;
+                    case "2":
+                        pl.InfoEquip();
+                        break;
+                    case "3":
+                        pl.CheckInventory();
+                        break;
+                    case "4":
+                        pl.ListSkill();
+                        break;
+                }
+                Console.WriteLine("для продолжения надимете любую клавишу...\n" +
+                                  "для выхлода из меню нажимете Backspace...");
+            } while (Console.ReadKey().Key != ConsoleKey.Backspace);
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         static void Main(string[] args)
         {
             try
             {
                 Magician player = new Magician("Илья", 1, "огонь");
+                Berserk pla = new Berserk("Илья", 1);
                 Slime slime = new Slime("pinky", 1, 35, "red",10);
-                player.AddItems(itemsCommon[10]);
-                Battle(player, slime);
-                Menu(player);
+                pla.AddItems(itemsCommon[10]);
+                Battle(pla, slime);
+                Menu(pla);
 
                 Console.ReadKey();
             }

@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlayerFile\AttackingBerserkSkill.cs" />
     <Compile Include="PlayerFile\AttackingMagicSkill.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="PlayerFile\Breserk.cs" />
+    <Compile Include="PlayerFile\HelpingBerserkSkill.cs" />
     <Compile Include="PlayerFile\HelpingMagicSkill.cs" />
     <Compile Include="PlayerFile\ItemCloth.cs" />
     <Compile Include="PlayerFile\ItemPlayer.cs" />

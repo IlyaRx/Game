@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game2.PlayerFile
 {
@@ -90,10 +87,10 @@ namespace Game2.PlayerFile
         public double Mana { get => _mana; set => _mana = value; }
         public double ManaMax { get => _manaMax; set => _manaMax = value; }
         public string Direction { get => _direction; set => _direction = value; }
-        internal List<Skill> IseSkills { get => _iseSkills; set => _iseSkills = value; }
-        public List<Skill> FireSkills { get => _fireSkills; set => _fireSkills = value; }
+        public List<Skill> IseSkills { get => _iseSkills; private set => _iseSkills = value; }
+        public List<Skill> FireSkills { get => _fireSkills; private set => _fireSkills = value; }
 
-        public int NumberAvailableSkills()
+        private int NumberAvailableSkills()
         {
             if (Level >= 8)
                 return 8;
@@ -127,10 +124,10 @@ namespace Game2.PlayerFile
             }
         }
 
-        public void ListMagicSkill(bool ontyAttack)
+        public void ListMagicSkill(bool onlyAttack)
         {
             int j = 1; // счётчик для нумирайции 
-            if (ontyAttack)
+            if (onlyAttack)
             {
                 if (Direction == "лёд")
                 {
@@ -193,100 +190,155 @@ namespace Game2.PlayerFile
         public override void DeleteItems(ItemPlayer item)
         {
             base.DeleteItems(item);
-            Damage += 4;
+            if(item is ItemWeapon)
+                Damage += 4;
         }
 
         public double UsageMagicSkill()
         {
+
             Console.WriteLine("Какой навык: ");
             ListMagicSkill();
             Console.WriteLine("");
             int number = Convert.ToInt32(Console.ReadLine()) - 1;
-            if (IseSkills[number] is HelpingMagicSkill helping && number <= NumberAvailableSkills())
+            if (Direction == "лёд")
             {
-                if (Mana - helping.Price > 0)
+                if (IseSkills[number] is HelpingMagicSkill helping && number <= NumberAvailableSkills())
                 {
-                    Mana -= helping.Price;
-                    HitPoints = (HitPoints + helping.HealingUse() >= HitPointsMax ? HitPointsMax : HitPoints + helping.HealingUse());
-                    ResistanceMagic += helping.ProtectionUse();
-                    Damage *= helping.GainDamageUse();
-                    CritChance += helping.GainCritChanceUse();
-                    CritDamage += helping.GainCritDamageUse();
-                    helping.InfoSkill();
+                    if (Mana - helping.Price > 0)
+                    {
+                        Mana -= helping.Price;
+                        HitPoints = (HitPoints + helping.HealingUse() >= HitPointsMax ? HitPointsMax : HitPoints + helping.HealingUse());
+                        ResistanceMagic += helping.ProtectionUse();
+                        Damage *= helping.GainDamageUse();
+                        CritChance += helping.GainCritChanceUse();
+                        CritDamage += helping.GainCritDamageUse();
+                        helping.InfoSkill();
+                        return 0;
+                    }
+                    else
+                        Console.WriteLine("нехватает маны");
+                    return 0;
+                }
+                else if (IseSkills[number] is AttackingMagicSkill attacking && number <= NumberAvailableSkills())
+                {
+                    if (Mana - attacking.Price >= 0)
+                    {
+                        Mana -= attacking.Price;
+                        return attacking.MagicАttack() * FactorDamageMag;
+                    }
+                    else
+                        Console.WriteLine("нехватает маны");
                     return 0;
                 }
                 else
-                    Console.WriteLine("нехватает маны");
-                return 0;
-            }
-            else if (IseSkills[number] is AttackingMagicSkill attacking && number <= NumberAvailableSkills())
-            {
-                if (Mana - attacking.Price >= 0)
-                {
-                    Mana -= attacking.Price;
-                    return attacking.MagicАttack() * FactorDamageMag;
-                }
-                else
-                    Console.WriteLine("нехватает маны");
+                    Console.WriteLine("Вы прочитали заклинание, но ничего не произошло\nВы пропуслили ход.");
                 return 0;
             }
             else
-                Console.WriteLine("Вы прочитали заклинание, но ничего не произошло\nВы пропуслили ход.");
-            return 0;
+            {
+                if (FireSkills[number] is HelpingMagicSkill helping && number <= NumberAvailableSkills())
+                {
+                    if (Mana - helping.Price > 0)
+                    {
+                        Mana -= helping.Price;
+                        HitPoints = (HitPoints + helping.HealingUse() >= HitPointsMax ? HitPointsMax : HitPoints + helping.HealingUse());
+                        ResistanceMagic += helping.ProtectionUse();
+                        Damage *= helping.GainDamageUse();
+                        CritChance += helping.GainCritChanceUse();
+                        CritDamage += helping.GainCritDamageUse();
+                        helping.InfoSkill();
+                        return 0;
+                    }
+                    else
+                        Console.WriteLine("нехватает маны");
+                    return 0;
+                }
+                else if (FireSkills[number] is AttackingMagicSkill attacking && number <= NumberAvailableSkills())
+                {
+                    if (Mana - attacking.Price >= 0)
+                    {
+                        Mana -= attacking.Price;
+                        return attacking.MagicАttack() * FactorDamageMag;
+                    }
+                    else
+                        Console.WriteLine("нехватает маны");
+                    return 0;
+                }
+                else
+                    Console.WriteLine("Вы прочитали заклинание, но ничего не произошло\nВы пропуслили ход.");
+                return 0;
+            }
+
         }
 
         public void LevelUpSkils()
         {
-            Console.WriteLine("Выберите один атакующий навык для прокачки");
-            ListMagicSkill(true);
-            int numberSkil = Convert.ToInt32(Console.ReadLine());
-            if (Direction == "лёд")
+            while (true)
             {
-                if (Level <= NumberAvailableSkills())
+                try
                 {
-
-                    if (IseSkills[numberSkil * 2 - 1] is AttackingMagicSkill ask)
+                    Console.WriteLine("Выберите один атакующий навык для прокачки");
+                    ListMagicSkill(true);
+                    int numberSkil = Convert.ToInt32(Console.ReadLine());
+                    if (Direction == "лёд")
                     {
-                        int firstL = ask.Level;
-                        double firstD = ask.MagicАttack();
-                        int firstP = ask.Price;
+                        if (Level <= NumberAvailableSkills())
+                        {
 
-                        ask.Level += 1;
-                        ask.Price += (int)Math.Round(ask.Price * 0.35, 0);
-                        Console.WriteLine($"\nУлучшкние навыка\n" +
-                        $"Уровень: {firstL} ===> {ask.Level}\n" +
-                        $"Урон: {firstD} ===> {ask.MagicАttack()}\n" +
-                        $"Цена: {firstP} ===> {ask.Price}");
+                            if (IseSkills[numberSkil * 2 - 1] is AttackingMagicSkill ask)
+                            {
+                                int firstL = ask.Level;
+                                double firstD = ask.MagicАttack();
+                                int firstP = ask.Price;
+
+                                ask.Level += 1;
+                                ask.Price += (int)Math.Round(ask.Price * 0.35, 0);
+                                Console.WriteLine($"\nУлучшкние навыка\n" +
+                                $"Уровень: {firstL} ===> {ask.Level}\n" +
+                                $"Урон: {firstD} ===> {ask.MagicАttack()}\n" +
+                                $"Цена: {firstP} ===> {ask.Price}");
+                                return;
+                            }
+                            else
+                                Console.WriteLine("Вы попыталисть улучшить зклининие лечебное и у вас не получилось это сделать.");
+                        }
+                        else
+                            Console.WriteLine("Вы попыталисть улучшить зклининие высокого уровня и у вас это не получилось.");
                     }
-                    else
-                        Console.WriteLine("Вы попыталисть улучшить зклининие лечебное и у вас не получилось это сделать.");
+                    if (Direction == "огонь")
+                    {
+                        if (Level <= NumberAvailableSkills())
+                        {
+
+                            if (FireSkills[numberSkil * 2 - 1] is AttackingMagicSkill ask)
+                            {
+                                int firstL = ask.Level;
+                                double firstD = ask.MagicАttack();
+                                int firstP = ask.Price;
+
+                                ask.Level += 1;
+                                ask.Price += (int)Math.Round(ask.Price * 0.35, 0);
+                                Console.WriteLine($"Улучшкние навыка\n" +
+                                $"Уровень: {firstL} ===> {ask.Level}\n" +
+                                $"Урон: {firstD} ===> {ask.MagicАttack()}\n" +
+                                $"Цена: {firstP} ===> {ask.Price}\n");
+                                return;
+                            }
+                        }
+                        else
+                            Console.WriteLine("Вы попыталисть улучшить зклининие высокого уровня и у вас это не получилось.");
+                    }
                 }
-                else
-                    Console.WriteLine("Вы попыталисть улучшить зклининие высокого уровня и у вас это не получилось.");
-            }
-            if (Direction == "огонь")
-            {
-                if (Level <= NumberAvailableSkills())
+                catch
                 {
+                    Console.Clear();
+                    Console.WriteLine("Некоректный ввод даных. нажмите любую кдлявишк для продлжения.");
+                    Console.ReadKey();
+                    Console.Clear();
 
-                    if (FireSkills[numberSkil * 2 - 1] is AttackingMagicSkill ask)
-                    {
-                        int firstL = ask.Level;
-                        double firstD = ask.MagicАttack();
-                        int firstP = ask.Price;
-
-                        ask.Level += 1;
-                        ask.Price += (int)Math.Round(ask.Price * 0.35, 0);
-                        Console.WriteLine($"Улучшкние навыка\n" +
-                        $"Уровень: {firstL} ===> {ask.Level}\n" +
-                        $"Урон: {firstD} ===> {ask.MagicАttack()}\n" +
-                        $"Цена: {firstP} ===> {ask.Price}\n");
-                    }
                 }
-                else
-                    Console.WriteLine("Вы попыталисть улучшить зклининие высокого уровня и у вас это не получилось.");
             }
-
         }
 
         public override void LevelUp()
@@ -303,13 +355,13 @@ namespace Game2.PlayerFile
 
         public override void InfoPlayer()
         {
-            base.InfoPlayer();;
+            base.InfoPlayer(); ;
             Console.Write($"|| Тип игрока: Маг\n");
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write($"|| Мана: {Mana}/{ManaMax}");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write($"{(Mana<=0?" !!!! Мана закончалась !!!" : "")} \n");
+            Console.Write($"{(Mana <= 0 ? " !!!! Мана закончалась !!!" : "")} \n");
             Console.ResetColor();
             Console.Write($"|| Спецификация: {Direction}\n");
             Console.Write("====================================\n");

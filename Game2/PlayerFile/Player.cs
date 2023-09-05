@@ -11,11 +11,11 @@ namespace Game2.PlayerFile
     {
         private string _name;//имя
         private double _hitPoints;//очки жизни
-        private double _hitPointsMax;//макимум очков жищзни
+        private double _hitPointsMax;//макимум очков жизни
         private int _level;//уровень
         private double _resistanceMagic;//магиеское сопротевление
         private double _resistancePhysical;//физическое сопротевление
-        private double _factorDamageMag;//множитель маглической отаки
+        private double _factorDamageMag;//множитель магической отаки
         private double _damage;//урон   
         private double _experience;//опты
         private double _experienceMax;//максимум опыта
@@ -23,8 +23,8 @@ namespace Game2.PlayerFile
         private double _critDamage; // крит урон
         private ItemCloth _itemPlayerCloth; // одежда защита
         private ItemWeapon _itemPlayerWeapon; // оружие дамаг
-        private ItemDecoreion _itemPlayerDecoration; // украшение ку кш
-        private List<ItemPlayer> _inventory = new List<ItemPlayer>(10);
+        private ItemDecoreion _itemPlayerDecoration; // украшение ку(крит урон) кш(крит шанс)
+        private List<ItemPlayer> _inventory = new List<ItemPlayer>(10); // инвентарь
 
         public Player() { }
 

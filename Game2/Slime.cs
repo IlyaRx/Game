@@ -12,7 +12,11 @@ namespace Game2
 
         public Slime() { }
 
-        public Slime(string name, int level, double damage, string color, double bustlevel = 0.3) : base(name, level, damage, bustlevel)
+        public Slime(string name, 
+                     int level, 
+                     double damage, 
+                     string color, 
+                     double bustlevel = 0.3) : base(name, level, damage, bustlevel)
         {
             Name = name;
             Level = level;

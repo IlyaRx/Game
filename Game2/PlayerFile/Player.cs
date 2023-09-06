@@ -11,15 +11,22 @@ namespace Game2.PlayerFile
     {
         private string _name;//имя
         private double _hitPoints;//очки жизни
+        private double _tempHitPoints;//временные очки жизни
         private double _hitPointsMax;//макимум очков жизни
         private int _level;//уровень
+        private double _tempResistanceMagic;//временное магиеское сопротевление
         private double _resistanceMagic;//магиеское сопротевление
+        private double _tempResistancePhysical;//времененое физическое сопротевление
         private double _resistancePhysical;//физическое сопротевление
+        private double _tempFactorDamageMag;//временный множитель магической отаки
         private double _factorDamageMag;//множитель магической отаки
+        private double _tempDamage;// временый урон   
         private double _damage;//урон   
         private double _experience;//опты
         private double _experienceMax;//максимум опыта
+        private double _tempCritChance; //временый крит шанс
         private double _critChance; // крит шанс
+        private double _tempCritDamage; //временый крит урон
         private double _critDamage; // крит урон
         private ItemCloth _itemPlayerCloth; // одежда защита
         private ItemWeapon _itemPlayerWeapon; // оружие дамаг
@@ -64,6 +71,13 @@ namespace Game2.PlayerFile
         internal ItemDecoreion ItemPlayerDecoration { get => _itemPlayerDecoration; set => _itemPlayerDecoration = value; }
         internal List<ItemPlayer> Inventory { get => _inventory; set => _inventory = value; }
         public double FactorDamageMag { get => _factorDamageMag; set => _factorDamageMag = value; }
+        private double TempHitPoints { get => _tempHitPoints; set => _tempHitPoints = value; }
+        private double TempResistanceMagic { get => _tempResistanceMagic; set => _tempResistanceMagic = value; }
+        private double TempResistancePhysical { get => _tempResistancePhysical; set => _tempResistancePhysical = value; }
+        private double TempFactorDamageMag { get => _tempFactorDamageMag; set => _tempFactorDamageMag = value; }
+        private double TempDamage { get => _tempDamage; set => _tempDamage = value; }
+        private double TempCritChance { get => _tempCritChance; set => _tempCritChance = value; }
+        private double TempCritDamage { get => _tempCritDamage; set => _tempCritDamage = value; }
 
         public virtual double Hit()
         {
@@ -160,7 +174,7 @@ namespace Game2.PlayerFile
                     }
                     if (Inventory[Convert.ToInt32(kayNum) - 1] is ItemDecoreion decoreion)
                     {
-                        Console.WriteLine($"|| + крит. шанс {decoreion.AddCritChance + Level}\n" +
+                        Console.WriteLine($"|| + крит. шанс {decoreion.AddCritChance}\n" +
                             $"|| + крит. урон {decoreion.AddCritDamage}");
                     }
                 }
@@ -178,6 +192,28 @@ namespace Game2.PlayerFile
                     Inventory.RemoveAt(Convert.ToInt32(kayNum) - 1);
 
             }
+        }
+
+        public virtual void RemInfo()
+        {
+            TempCritChance = CritChance;
+            TempCritDamage = CritDamage;
+            TempDamage = Damage;
+            TempFactorDamageMag = FactorDamageMag;
+            TempHitPoints = HitPoints;
+            TempResistanceMagic = ResistanceMagic;
+            TempResistancePhysical = ResistancePhysical;
+        }
+
+        public virtual void InsInfo()
+        {
+            CritChance = TempCritChance;
+            CritDamage = TempCritDamage;
+            Damage = TempDamage;
+            FactorDamageMag = TempFactorDamageMag;
+            HitPoints = TempHitPoints;
+            ResistanceMagic = TempResistanceMagic;
+            ResistancePhysical = TempResistancePhysical;
         }
 
         public virtual void LevelUp()
@@ -249,6 +285,7 @@ namespace Game2.PlayerFile
 
         public virtual void InfoPlayer()
         {
+            Console.Clear();
             Console.Write($"Игрок===============================\n");
             Console.Write($"|| Имя: {Name}\n");
             Console.Write($"|| Уровень: {Level}\n");

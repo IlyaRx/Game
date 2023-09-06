@@ -1,17 +1,13 @@
 ﻿using Game2.PlayerFile;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Game2
 {
     class Program
     {
+        public static int id = 0;
         static List<ItemPlayer> itemsCommon = new List<ItemPlayer>()
         {
             new ItemCloth("Мантия ученика мага", "Обычный",5,1), //0
@@ -137,8 +133,10 @@ namespace Game2
         }
 
 
-        public static void Battle(Magician player, Enemy enemy)
+        public static void Battle(Player player, Enemy enemy)
         {
+            Console.Clear();
+            player.RemInfo();
             Random chance = new Random();
             Console.WriteLine("Бой начался");
             while (player.HitPoints > 0 && enemy.HitPoints > 0)
@@ -148,10 +146,10 @@ namespace Game2
 
                     Console.WriteLine("Ход игрока. Выберите действие.\n" +
                                       "Физическая атака: 1\n" +
-                                      "Заклинание: 2\n" +
+                                      "Навык/Заклинание: 2\n" +
                                       "Пропустить ход: 3");
 
-                    Console.Write("--->");
+                    Console.Write("=>");
                     switch (Convert.ToInt32(Console.ReadLine()))
                     {
                         case 1:
@@ -162,12 +160,24 @@ namespace Game2
                             Console.WriteLine($"Игрок сходил. ({(hit <= 0 ? "Ты не смог пробить броню " : Convert.ToString(hit) + " физ. урона)")}");
                             break;
                         case 2:
-                            double magicSkill = player.UsageMagicSkill();
-                            double maghit = (magicSkill <= enemy.ResistanceMagic ? 0 : magicSkill - enemy.ResistanceMagic) *
-                                                (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
+                            if (player is Magician mag)
+                            {
+                                double playerSkill = mag.UsageMagicSkill();
+                                double maghit = (playerSkill <= enemy.ResistanceMagic ? 0 : playerSkill - enemy.ResistanceMagic) *
+                                                    (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
 
-                            enemy.HitPoints -= maghit;
-                            Console.WriteLine($"Игрок сходил. {(maghit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(maghit) + " маг. урона)")}");
+                                enemy.HitPoints -= maghit;
+                                Console.WriteLine($"Игрок сходил. {(maghit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(maghit) + " маг. урона)")}");
+                            }
+                            else if (player is Berserk ber)
+                            {
+                                double playerSkill = ber.UsageSkill();
+                                double plhit = (playerSkill <= enemy.ResistancePhysical ? 0 : playerSkill - enemy.ResistancePhysical) *
+                                                    (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
+
+                                enemy.HitPoints -= plhit;
+                                Console.WriteLine($"Игрок сходил. {(plhit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(plhit) + " физ. урона)")}");
+                            }
                             break;
                         case 3:
                             Console.WriteLine("Игрок сходил и пропустил ход.");
@@ -200,6 +210,7 @@ namespace Game2
             if (enemy.HitPoints <= 0)
             {
                 Console.WriteLine("Победил игрок");
+                player.InsInfo();
                 player.CheckLevel(100 * enemy.Level * enemy.Bustlevel);
                 player.Inventory.Add(GetItemPlayer());
             }
@@ -207,59 +218,45 @@ namespace Game2
                 Console.WriteLine("капец ты лох. ты здох");
         }
 
-
-
-        public static void Battle(Berserk player, Enemy enemy)
+        static void Menu(Player pl)
         {
-            Random chance = new Random();
-            Console.WriteLine("Бой начался");
-            while (player.HitPoints > 0 && enemy.HitPoints > 0)
+            while (true)
             {
                 try
                 {
 
-                    Console.WriteLine("Ход игрока. Выберите действие.\n" +
-                                      "Физическая атака: 1\n" +
-                                      "Боевой навык: 2\n" +
-                                      "Пропустить ход: 3");
 
-                    Console.Write("--->");
-                    switch (Convert.ToInt32(Console.ReadLine()))
+                    do
                     {
-                        case 1:
-                            double plHit = player.Hit();
-                            double hit = (plHit <= enemy.ResistancePhysical ? 0 : plHit - enemy.ResistancePhysical) *
-                                                  (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
-                            enemy.HitPoints -= hit;
-                            Console.WriteLine($"Игрок сходил. ({(hit <= 0 ? "Ты не смог пробить броню " : Convert.ToString(hit) + " физ. урона)")}");
-                            break;
-                        case 2:
-                            double skill = player.UsageSkill();
-                            double skillHit = (skill <= enemy.ResistancePhysical ? 0 : skill - enemy.ResistancePhysical) *
-                                                (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
-
-                            enemy.HitPoints -= skillHit;
-                            Console.WriteLine($"Игрок сходил. {(skillHit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(skillHit) + " физ. урона)")}");
-                            break;
-                        case 3:
-                            Console.WriteLine("Игрок сходил и пропустил ход.");
-                            break;
-                    }
-
-                    RedactorText(". . .\n");
-                    if (chance.Next(1, 101) > 10)
-                    {
-                        double enemyHit = (enemy.Damage <= player.ResistancePhysical ? 0 : enemy.Damage - player.ResistancePhysical);
-                        player.HitPoints -= enemyHit;
-                        Console.WriteLine("Монстр ударил. " + (enemyHit <= 0 ? " И не смог пробить броню " : "(" + Convert.ToString(enemyHit) + " урона.)"));
-                    }
-                    else
-                        Console.WriteLine("Монстр промахнулся.");
-                    player.InfoPlayer();
-                    Console.WriteLine("");
-                    enemy.InfoEnemy();
-                    Console.ReadKey();
-                    Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine($"Информация о игроке: 1\n" +
+                                          $"Экиперовка: 2\n" +
+                                          $"Инвентарь: 3\n" +
+                                          $"Способности: 4");
+                        Console.Write("=>");
+                        string kay = Console.ReadLine();
+                        switch (kay)
+                        {
+                            case "1":
+                                pl.InfoPlayer();
+                                break;
+                            case "2":
+                                pl.InfoEquip();
+                                break;
+                            case "3":
+                                pl.CheckInventory();
+                                break;
+                            case "4":
+                                if (pl is Magician magician)
+                                    magician.ListMagicSkill();
+                                if (pl is Berserk berserk)
+                                    berserk.ListSkill();
+                                break;
+                        }
+                        Console.WriteLine("для продолжения надимете любую клавишу...\n" +
+                                          "для выхлода из меню нажимете Backspace...");
+                    } while (Console.ReadKey().Key != ConsoleKey.Backspace);
+                    return;
                 }
                 catch
                 {
@@ -269,88 +266,50 @@ namespace Game2
                     Console.Clear();
                 }
             }
-            if (enemy.HitPoints <= 0)
-            {
-                Console.WriteLine("Победил игрок");
-                player.CheckLevel(100 * enemy.Level * enemy.Bustlevel);
-                player.Inventory.Add(GetItemPlayer());
-            }
-            else
-                Console.WriteLine("капец ты лох. ты здох");
         }
 
-        static void Menu(Magician pl)
-        {
-            do
-            {
-                Console.ReadKey();
-                Console.Clear();
-                Console.WriteLine($"Информация о игроке: 1\n" +
-                                  $"Экиперовка: 2\n" +
-                                  $"Инвентарь: 3\n" +
-                                  $"Способности: 4");
-                string kay = Console.ReadLine();
-                switch (kay)
-                {
-                    case "1":
-                        pl.InfoPlayer();
-                        break;
-                    case "2":
-                        pl.InfoEquip();
-                        break;
-                    case "3":
-                        pl.CheckInventory();
-                        break;
-                    case "4":
-                        pl.ListMagicSkill();
-                        break;
-                }
-                Console.WriteLine("для продолжения надимете любую клавишу...\n" +
-                                  "для выхлода из меню нажимете Backspace...");
-            } while (Console.ReadKey().Key != ConsoleKey.Backspace);
-        }
 
-        static void Menu(Berserk pl)
-        {
-            do
-            {
-                Console.ReadKey();
-                Console.Clear();
-                Console.WriteLine($"Информация о игроке: 1\n" +
-                                  $"Экиперовка: 2\n" +
-                                  $"Инвентарь: 3\n" +
-                                  $"Способности: 4");
-                string kay = Console.ReadLine();
-                switch (kay)
-                {
-                    case "1":
-                        pl.InfoPlayer();
-                        break;
-                    case "2":
-                        pl.InfoEquip();
-                        break;
-                    case "3":
-                        pl.CheckInventory();
-                        break;
-                    case "4":
-                        pl.ListSkill();
-                        break;
-                }
-                Console.WriteLine("для продолжения надимете любую клавишу...\n" +
-                                  "для выхлода из меню нажимете Backspace...");
-            } while (Console.ReadKey().Key != ConsoleKey.Backspace);
-        }
+
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         static void Main(string[] args)
         {
             try
             {
-                Magician player = new Magician("Илья", 1, "огонь");
-                Berserk pla = new Berserk("Илья", 1);
-                Slime slime = new Slime("pinky", 1, 35, "red",10);
-                pla.AddItems(itemsCommon[10]);
-                Battle(pla, slime);
-                Menu(pla);
+                Slime slime = new Slime("fdsd", 1, 33, "red");
+
+                RedactorText("\tСоздание персанажа...\n");
+                RedactorText("\tНазави своего персонажа:\n");
+                Magician playerM = null;
+                Berserk playerB = null;
+                {
+                    Console.Write("=>");
+                    string name = Console.ReadLine();
+                    RedactorText("\tВыберите класс\n" +
+                                 "\t1.Маг\t2.Берсерк\n");
+                    Console.Write("=>");
+                    id = Convert.ToInt32(Console.ReadLine());
+                    if (id == 1)
+                    {
+                        RedactorText("\tВыбели напровление мага\n" +
+                                             "\t1.лёд\t2.oгонь\n");
+                        Console.Write("=>");
+                        int direction = Convert.ToInt32(Console.ReadLine());
+                        playerM = new Magician(name, 1, direction == 1 ? "лёд" : "огонь");
+                    }
+                    else
+                        playerB = new Berserk(name, 1);
+                    RedactorText("Вы создали персонажа...");
+                }
+                if (id == 1) playerM.InfoPlayer();
+                else playerB.InfoPlayer();
+
+                if (id == 1) Menu(playerM);
+                else Menu(playerB);
+
+                if (id == 1) Battle(playerM, slime);
+                else Battle(playerB, slime);
 
                 Console.ReadKey();
             }
@@ -359,6 +318,7 @@ namespace Game2
                 Console.Clear();
                 Console.WriteLine("Вы выбрали другое значение.\n Попробуй снова!\n Нажмите на любую клавишу.");
                 Console.ReadKey();
+                Console.Clear();
             }
         }
 

@@ -5,6 +5,7 @@ namespace Game2.PlayerFile
 {
     class Magician : Player
     {
+        private double _TempMana;
         private double _mana;
         private double _manaMax;
         private string _direction;
@@ -89,6 +90,19 @@ namespace Game2.PlayerFile
         public string Direction { get => _direction; set => _direction = value; }
         public List<Skill> IseSkills { get => _iseSkills; private set => _iseSkills = value; }
         public List<Skill> FireSkills { get => _fireSkills; private set => _fireSkills = value; }
+        private double TempMana { get => _TempMana; set => _TempMana = value; }
+
+        public override void RemInfo()
+        {
+            base.RemInfo();
+            TempMana = Mana;
+        }
+
+        public override void InsInfo()
+        {
+            base.InsInfo();
+            Mana = TempMana;
+        }
 
         private int NumberAvailableSkills()
         {
@@ -364,7 +378,10 @@ namespace Game2.PlayerFile
             Console.Write($"{(Mana <= 0 ? " !!!! Мана закончалась !!!" : "")} \n");
             Console.ResetColor();
             Console.Write($"|| Спецификация: {Direction}\n");
-            Console.Write("====================================\n");
+            Console.Write("====================================\n\n");
+
+            Console.WriteLine("для продолжения нажмити любую клавишу...");
+            Console.ReadKey();
         }
     }
 }

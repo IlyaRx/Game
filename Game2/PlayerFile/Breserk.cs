@@ -5,8 +5,9 @@ namespace Game2.PlayerFile
 {
     internal class Berserk : Player
     {
-        private int _fatigue; //усталость
-        private int _fatigueMax;
+        private double _tempFatigue; //временная усталость
+        private double _fatigue; //усталость
+        private double _fatigueMax;
         private List<Skill> _SkillsBerserk = new List<Skill>
         {
             new HelpingBerserkSkill("Лечебный рёв", 1, "Берсерк изаёт рёв, который\n" +
@@ -44,9 +45,23 @@ namespace Game2.PlayerFile
             FatigueMax = 100;
         }
 
-        public int Fatigue { get => _fatigue; set => _fatigue = value; }
-        public int FatigueMax { get => _fatigueMax; set => _fatigueMax = value; }
+        public double Fatigue { get => _fatigue; set => _fatigue = value; }
+        public double FatigueMax { get => _fatigueMax; set => _fatigueMax = value; }
         public List<Skill> SkillsBerserk { get => _SkillsBerserk; private set => _SkillsBerserk = value; }
+        private double TempFatigue { get => _tempFatigue; set => _tempFatigue = value; }
+
+        public override void RemInfo()
+        {
+            base.RemInfo();
+            TempFatigue = Fatigue;
+        }
+
+        public override void InsInfo()
+        {
+            base.InsInfo();
+            Fatigue = TempFatigue;
+        }
+
 
         public void ListSkill()
         {
@@ -200,7 +215,10 @@ namespace Game2.PlayerFile
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write($"{(Fatigue >= FatigueMax ? " !!!! Ты устал !!!" : "")} \n");
             Console.ResetColor();
-            Console.Write("====================================\n");
+            Console.Write("====================================\n\n");
+
+            Console.WriteLine("для продолжения нажмити любую клавишу...");
+            Console.ReadKey();
         }
     }
 }

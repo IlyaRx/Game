@@ -200,7 +200,6 @@ namespace Game2.PlayerFile
             TempCritDamage = CritDamage;
             TempDamage = Damage;
             TempFactorDamageMag = FactorDamageMag;
-            TempHitPoints = HitPoints;
             TempResistanceMagic = ResistanceMagic;
             TempResistancePhysical = ResistancePhysical;
         }
@@ -211,7 +210,6 @@ namespace Game2.PlayerFile
             CritDamage = TempCritDamage;
             Damage = TempDamage;
             FactorDamageMag = TempFactorDamageMag;
-            HitPoints = TempHitPoints;
             ResistanceMagic = TempResistanceMagic;
             ResistancePhysical = TempResistancePhysical;
         }

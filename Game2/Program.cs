@@ -71,15 +71,17 @@ namespace Game2
             new ItemDecoreion("Подвеска с пятилистным клевером","Легендарный",2,2), //2
         };
 
+
+
         public static void RedactorText(string text)
         {
             int i = 0;
             foreach (var lettre in text)
             {
                 i++;
-                Thread.Sleep(60);
+                Thread.Sleep(10);
                 Console.Write(lettre);
-                if (i >= 200 && Convert.ToString(lettre) == " ")
+                if (i >= 100 && Convert.ToString(lettre) == " ")
                 {
                     Console.Write("\n");
                     i = 0;
@@ -91,7 +93,7 @@ namespace Game2
         private static ItemPlayer GetItemPlayer()
         {
             Random chance = new Random();
-            Console.WriteLine("Вы получили: ");
+            Console.WriteLine("\tВы получили: ");
             int chanceItem = chance.Next(1, 101);
             if (chanceItem == 1)
             {
@@ -138,13 +140,13 @@ namespace Game2
             Console.Clear();
             player.RemInfo();
             Random chance = new Random();
-            Console.WriteLine("Бой начался");
+            Console.WriteLine("\tБой начался");
             while (player.HitPoints > 0 && enemy.HitPoints > 0)
             {
                 try
                 {
 
-                    Console.WriteLine("Ход игрока. Выберите действие.\n" +
+                    Console.WriteLine("\tХод игрока. Выберите действие.\n" +
                                       "Физическая атака: 1\n" +
                                       "Навык/Заклинание: 2\n" +
                                       "Пропустить ход: 3");
@@ -157,7 +159,7 @@ namespace Game2
                             double hit = (plHit <= enemy.ResistancePhysical ? 0 : plHit - enemy.ResistancePhysical) *
                                                   (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
                             enemy.HitPoints -= hit;
-                            Console.WriteLine($"Игрок сходил. ({(hit <= 0 ? "Ты не смог пробить броню " : Convert.ToString(hit) + " физ. урона)")}");
+                            Console.WriteLine($"\tИгрок сходил. ({(hit <= 0 ? "Ты не смог пробить броню " : Convert.ToString(hit) + " физ. урона)")}");
                             break;
                         case 2:
                             if (player is Magician mag)
@@ -167,7 +169,7 @@ namespace Game2
                                                     (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
 
                                 enemy.HitPoints -= maghit;
-                                Console.WriteLine($"Игрок сходил. {(maghit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(maghit) + " маг. урона)")}");
+                                Console.WriteLine($"\tИгрок сходил. {(maghit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(maghit) + " маг. урона)")}");
                             }
                             else if (player is Berserk ber)
                             {
@@ -176,23 +178,23 @@ namespace Game2
                                                     (chance.Next(1, 101) <= player.CritChance * 100 ? 1 + player.CritDamage : 1);
 
                                 enemy.HitPoints -= plhit;
-                                Console.WriteLine($"Игрок сходил. {(plhit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(plhit) + " физ. урона)")}");
+                                Console.WriteLine($"\tИгрок сходил. {(plhit <= 0 ? "Ты не смог пробить броню " : "(" + Convert.ToString(plhit) + " физ. урона)")}");
                             }
                             break;
                         case 3:
-                            Console.WriteLine("Игрок сходил и пропустил ход.");
+                            Console.WriteLine("\tИгрок сходил и пропустил ход.");
                             break;
                     }
 
-                    RedactorText(". . .\n");
+                    RedactorText("\t. . .\n");
                     if (chance.Next(1, 101) > 10)
                     {
                         double enemyHit = (enemy.Damage <= player.ResistancePhysical ? 0 : enemy.Damage - player.ResistancePhysical);
                         player.HitPoints -= enemyHit;
-                        Console.WriteLine("Монстр ударил. " + (enemyHit <= 0 ? " И не смог пробить броню " : "(" + Convert.ToString(enemyHit) + " урона.)"));
+                        Console.WriteLine("\tМонстр ударил. " + (enemyHit <= 0 ? " И не смог пробить броню " : "(" + Convert.ToString(enemyHit) + " урона.)"));
                     }
                     else
-                        Console.WriteLine("Монстр промахнулся.");
+                        Console.WriteLine("\tМонстр промахнулся.");
                     player.InfoPlayer();
                     Console.WriteLine("");
                     enemy.InfoEnemy();
@@ -209,13 +211,13 @@ namespace Game2
             }
             if (enemy.HitPoints <= 0)
             {
-                Console.WriteLine("Победил игрок");
+                Console.WriteLine("\tПобедил игрок");
                 player.InsInfo();
                 player.CheckLevel(100 * enemy.Level * enemy.Bustlevel);
                 player.Inventory.Add(GetItemPlayer());
             }
             else
-                Console.WriteLine("капец ты лох. ты здох");
+                Console.WriteLine("\t\tкапец ты лох. ты здох");
         }
 
         static void Menu(Player pl)
@@ -224,11 +226,10 @@ namespace Game2
             {
                 try
                 {
-
-
                     do
                     {
                         Console.Clear();
+                        Console.WriteLine("Меню игрка\n");
                         Console.WriteLine($"Информация о игроке: 1\n" +
                                           $"Экиперовка: 2\n" +
                                           $"Инвентарь: 3\n" +
@@ -268,10 +269,6 @@ namespace Game2
             }
         }
 
-
-
-
-
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         static void Main(string[] args)
         {
@@ -283,6 +280,7 @@ namespace Game2
                 RedactorText("\tНазави своего персонажа:\n");
                 Magician playerM = null;
                 Berserk playerB = null;
+
                 {
                     Console.Write("=>");
                     string name = Console.ReadLine();
@@ -302,14 +300,190 @@ namespace Game2
                         playerB = new Berserk(name, 1);
                     RedactorText("Вы создали персонажа...");
                 }
-                if (id == 1) playerM.InfoPlayer();
-                else playerB.InfoPlayer();
 
-                if (id == 1) Menu(playerM);
-                else Menu(playerB);
+                if (id == 1)
+                {
+                    Console.Clear();
+                    RedactorText("Проснувшийсь в тесной каменной комнате и мучаясь от сильной боли в голове вы пытаетесь " +
+                        "что нибудь вспомнить, но в голове один туман, однако вы смогли впомнить своё имя, ");
+                    Console.Write(playerM.Name + ".\n");
+                    RedactorText("Оглядываясь, вы видите стол, стул, окно над столом. " +
+                        "Встав с кровати и увидев письмо на столе, вы его читаете.");
+                    Console.ReadKey();
+                    Console.Clear();
+                    Console.WriteLine($"\t Здравствуй дорогой путник. Мы вам очень благодарны за спасение\n" +
+                                      $"\t нашего ребёнка. Очень жаль что с вами случилось несчатье, однако\n" +
+                                      $"\t мы пригласили лекаря. Он вас подлатал, но при этом рана слишком\n" +
+                                      $"\t сильная и могут быть последсвия. Когда очнётесь позвоните в \n" +
+                                      $"\t колокольчик рядом с дверью и мед. сестра вас приведёт к нам.\n" +
+                                      $"\t ещё раз спасибо.\n\n" +
+                                      $"\t P.S. Без награды вы не останитесь.\n" +
+                                      $"\t\t\t Стагоста деревни Гиберд Родинов.");
+                    Console.ReadKey();
+                    Console.Clear();
+                    RedactorText("Внезапно издался звон колокольчика со строны двери. Повернувший вы заметили голову" +
+                        " девочки. Она неловкими жестами показала, что бы вы шли за ней");
 
-                if (id == 1) Battle(playerM, slime);
-                else Battle(playerB, slime);
+                    Console.WriteLine("\n1.идти за девочкой \n2.Спростиь:\"кто ты?\" \n3.Посмотреть свои вещи.");
+                    Console.Write("=>");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            break;
+                        case "2":
+                            RedactorText("Спросив она ответила, что её зовут Алиса и она помошница лекоря." +
+                                "Так же она сказала, что пришла проверить состояние пациента, но так как вы пришли" +
+                                "в себя и можете ходить, то лучше пройти к лекорю для осмотра. \"Я буду ждять за дверью\" - " +
+                                "сказала она и закрыла дверь");
+                            Console.WriteLine("\n1.идти за девочкой \n2.Посмотреть свои вещи.");
+                            Console.Write("=>");
+                            if (Console.ReadLine() == "2")
+                                Menu(playerM);
+                            break;
+                        case "3":
+                            Menu(playerM);
+                            break;
+                    }
+                    Console.ReadKey();
+                    Console.Clear();
+                    RedactorText("Открыв дверь ты увидел небольшое помещение, где на каждой из 4-х стен есть по двери." +
+                        " Ты вышел из 1 ой из них. По центру небольшая круговая лесница вниз. Девочка сразу пошла вниз по леснице." +
+                        " Ты отправился за ней. \nСпускаясь всё ниже ты ощющал холод. Дойдя до конца лесницы, резкая вспышка света ослепила" +
+                        " тебя. \n\n \"Извени, тут небольшие эксперементы. Здравствуй, меня зовут доктор Холс. Как себя чувствуешь? У тебя были сильные раны" +
+                        " в районе головы. Мне надо тебя осмотреть.\" \n\n");
+
+                    Console.WriteLine("Подойти к Холсу - Enter");
+                    Console.ReadKey();
+                    Console.Clear();
+
+                    RedactorText("Во время осмотра Холс сказал, что лечение прошло успешно и осталость заживить рану окончательно. Так же он сказал" +
+                        ", что потеря памяти это не нормально для подобного рода травм. Так же он сказал, что на тебе проклятие, но это всё." +
+                        " Распрашивая его о том как вы получили травму, вы почти " +
+                        "ничего не узнали, единственное что вы услышли от него это сходить к главе деревни.\n ");
+                    RedactorText("\"А чтуть не забыл сказать. Ты владеешь магией со слов главы. Мана находиться во всем твоём теле" +
+                        "поэтому, что бы вспомнить заклинания тебе надо втупить в бой и страх в сочитании с маной сделают своё дело.\"" +
+                        " - сказал Холс и вручил в руку кольцо. \"Это кольцо поможет тебе остлеживать товё состояние здоровья, так что не потеряй " +
+                        "и удачи.\" \n");
+                    RedactorText("После его слов вы отправились к сатосте деревни вместе с Алисой. ");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
+                RedactorText("Вы уиделсь со старостой.\n\n \"Ну здравствуй. Я хочу тебя поблагодарить, за спасение Алисы и " +
+                    "в качестве награды я дам тебе эти вещи. Они не новые, но деревня сейчас в тяжелом состоянии, поэтому такая" +
+                    " награда, но твоя помощи всё равно бесценая, так что если нужно что то обращайся, эти двери для тебя всегда " +
+                    "открыты.\"\n");
+
+                Console.WriteLine("\tВы получили вещи в инвентарь.");
+                if (id == 1)
+                {
+                    playerM.Inventory.Add(itemsCommon[14]);
+                    playerM.Inventory.Add(itemsUncommon[0]);
+                    playerM.Inventory.Add(itemsUncommon[9]);
+                }
+                else
+                {
+                    playerB.Inventory.Add(itemsCommon[14]);
+                    playerB.Inventory.Add(itemsUncommon[1]);
+                    playerB.Inventory.Add(itemsUncommon[6]);
+                }
+
+                Console.WriteLine("1.Меню\n" +
+                                  "2.Пропустить...\n");
+                Console.Write("=>");
+
+                if (Console.ReadLine() == "1")
+                {
+                    if (id == 1) Menu(playerM);
+                    else Menu(playerB);
+                }    
+
+                Console.WriteLine("1.Спросить про то как получил рану.\n" +
+                                  "2.Спросить про Алису.\n" +
+                                  "3.Спросить про врага.\n");
+                Console.Write("=>");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":Console.Clear();
+                        RedactorText("\nГлава сказал что всё знает со слов Алисы: \"По описанию, на Алису напала Ведьма, а ты её спас" +
+                            "оторвав руку этой таври. Она наложила заклинание и сбежала, наверное её убийство вернёт тебе память.\"");
+                        Console.WriteLine("1.Спросить про Алису.\n" +
+                                          "2.Спросить про врага.\n");
+                        Console.Write("=>");
+                        if(Console.ReadLine() == "1")
+                        {
+                            RedactorText("\n\"Алиса отделалсь лёгким испугом, за неё не переживай.\" - отвтеил глава");
+                            Console.WriteLine("1.Спросить про врага.\n");
+                            Console.Write("=>");
+                            Console.ReadLine();
+                            RedactorText("\n\"Как я и сказал ранее - это скорее всего была Ведьма. Они в последнее время переместились в наш район, в соседний лес" +
+                            ". Она ещё живая. Так что бы её найти иди в лес, но там очень опасно, лес немаленький. Заранее удачи\"");
+                        }
+                        else
+                        {
+                            RedactorText("\n\"Как я и сказал ранее - это скорее всего была Ведьма. Они в последнее время переместились в наш район, в соседний лес" +
+                             ". Она ещё живая. Так что бы её найти иди в лес, но там очень опасно, лес немаленький. Заранее удачи\"");
+                            Console.WriteLine("1.Спросить про Алису.\n" +
+                                          "2.Уйти.\n");
+                            Console.Write("=>");
+                            if (Console.ReadLine() == "1")
+                                RedactorText("\n\"Алиса отделалсь лёгким испугом, за неё не переживай.\" - отвтеил глава");
+                        }
+                        break;
+                    case "2":
+                        RedactorText("\n\"Алиса отделалсь лёгким испугом, за неё не переживай.\" - отвтеил глава");
+                        Console.WriteLine("1.Спросить про то как получил рану.\n" +
+                                  "2.Спросить про врага.\n");
+                        Console.Write("=>");
+                        if (Console.ReadLine() == "1")
+                        {
+                            RedactorText("\nГлава сказал что всё знает со слов Алисы: \"По описанию, на Алису напала Ведьма, а ты её спас" +
+                            "оторвав руку этой таври. Она наложила заклинание и сбежала, наверное её убийство вернёт тебе память.\"");
+                            Console.WriteLine("1.Спросить про врага.\n");
+                            Console.Write("=>");
+                            Console.ReadLine();
+                            RedactorText("\n\"Как я и сказал ранее - это скорее всего была Ведьма. Они в последнее время переместились в наш район, в соседний лес" +
+                             ". Она ещё живая. Так что бы её найти иди в лес, но там очень опасно, лес немаленький. Заранее удачи\"");
+                        }
+                        else
+                        {
+                            RedactorText("\n\"Это скорее всего была Ведьма. Они в последнее время переместились в наш район, в соседний лес" +
+                            ". Она ещё живая. Так что бы её найти иди в лес, но там очень опасно, лес немаленький. Заранее удачи\"");
+                            Console.WriteLine("1.Спросить про то как получил рану.\n");
+                            Console.Write("=>");
+                            Console.ReadLine();
+                            RedactorText("\nГлава сказал что всё знает со слов Алисы: \"По описанию, на Алису напала Ведьма, а ты её спас" +
+                            "оторвав руку этой таври. Она наложила заклинание и сбежала, наверное её убийство вернёт тебе память.\"");
+                        }
+                        break;
+                    case "3":
+                        RedactorText("\n\"Это скорее всего была Ведьма. Они в последнее время переместились в наш район, в соседний лес" +
+                            ". Она ещё живая. Так что бы её найти иди в лес, но там очень опасно, лес немаленький. Заранее удачи\"");
+                        Console.WriteLine("1.Спросить про то как получил рану.\n" +
+                                  "2.Спросить про Алису.\n");
+                        Console.Write("=>");
+                        if (Console.ReadLine() == "1")
+                        {
+                            RedactorText("\nГлава сказал что всё знает со слов Алисы: \"По описанию Алисы, на неё напала Ведьма, а ты её спас, " +
+                            "оторвав руку этой таври. Она наложила заклинание и сбежала, наверное её убийство вернёт тебе память.\"");
+                            Console.WriteLine("1.Спросить про Алису.\n" +
+                                  "2.Уйти\n");
+                            Console.Write("=>");
+                            if(Console.ReadLine() == "1")
+                                RedactorText("\n\"Алиса отделалсь лёгким испугом, за неё не переживай.\" - отвтеил глава");
+                        }
+                        else
+                        {
+                            RedactorText("\n\"Алиса отделалсь лёгким испугом, за неё не переживай.\" - отвтеил глава");
+                            Console.WriteLine("1.Спросить про то как получил рану.\n");
+                            Console.Write("=>");
+                            Console.ReadLine();
+                            RedactorText("\nГлава сказал что всё знает со слов Алисы: \"По описанию Алисы, на неё напала Ведьма, а ты её спас, " +
+                            "оторвав руку этой таври. Она наложила заклинание и сбежала, наверное её убийство вернёт тебе память.\"");
+                        }
+                        break;
+                }
 
                 Console.ReadKey();
             }

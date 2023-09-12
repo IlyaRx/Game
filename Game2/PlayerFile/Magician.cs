@@ -253,7 +253,7 @@ namespace Game2.PlayerFile
             {
                 if (FireSkills[number] is HelpingMagicSkill helping && number <= NumberAvailableSkills())
                 {
-                    if (Mana - helping.Price > 0)
+                    if (Mana - helping.Price >= 0)
                     {
                         Mana -= helping.Price;
                         HitPoints = (HitPoints + helping.HealingUse() >= HitPointsMax ? HitPointsMax : HitPoints + helping.HealingUse());
@@ -379,9 +379,6 @@ namespace Game2.PlayerFile
             Console.ResetColor();
             Console.Write($"|| Спецификация: {Direction}\n");
             Console.Write("====================================\n\n");
-
-            Console.WriteLine("для продолжения нажмити любую клавишу...");
-            Console.ReadKey();
         }
     }
 }

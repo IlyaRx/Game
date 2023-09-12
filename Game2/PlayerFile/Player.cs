@@ -146,6 +146,7 @@ namespace Game2.PlayerFile
         {
             while (true)
             {
+                Console.Clear();
                 for (int i = 0; i < Inventory.Count; i++)
                 {
                     Console.Write($"{i + 1}==============================\n"
@@ -154,6 +155,7 @@ namespace Game2.PlayerFile
                 }
                 Console.WriteLine($"\nбать предмет: #номер предмета#\n" +
                                   $"Выйте из инвенторя: *");
+                Console.Write("=>");
                 string kayNum = Console.ReadLine();
                 if (kayNum == "*")
                     return;
@@ -183,6 +185,7 @@ namespace Game2.PlayerFile
                                   $"Выкинуть предмет: - \n" +
                                   $"вернуться назад: Enter\n" +
                                   $"Выйте из инвенторя: *");
+                Console.Write("=>");
                 string kay = Console.ReadLine();
                 if (kay == "*")
                     return;
@@ -247,6 +250,7 @@ namespace Game2.PlayerFile
 
         public virtual void InfoEquip()
         {
+            
             Console.WriteLine("-----------------------------------------");
             if (ItemPlayerCloth != null)
             {
@@ -283,7 +287,6 @@ namespace Game2.PlayerFile
 
         public virtual void InfoPlayer()
         {
-            Console.Clear();
             Console.Write($"Игрок===============================\n");
             Console.Write($"|| Имя: {Name}\n");
             Console.Write($"|| Уровень: {Level}\n");

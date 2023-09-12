@@ -44,9 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enemys\Robber.cs" />
     <Compile Include="PlayerFile\AttackingBerserkSkill.cs" />
     <Compile Include="PlayerFile\AttackingMagicSkill.cs" />
-    <Compile Include="Enemy.cs" />
+    <Compile Include="Enemys\Enemy.cs" />
     <Compile Include="PlayerFile\Breserk.cs" />
     <Compile Include="PlayerFile\HelpingBerserkSkill.cs" />
     <Compile Include="PlayerFile\HelpingMagicSkill.cs" />
@@ -59,7 +60,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerFile\Skill.cs" />
-    <Compile Include="Slime.cs" />
+    <Compile Include="Enemys\Slime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

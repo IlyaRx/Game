@@ -216,9 +216,6 @@ namespace Game2.PlayerFile
             Console.Write($"{(Fatigue >= FatigueMax ? " !!!! Ты устал !!!" : "")} \n");
             Console.ResetColor();
             Console.Write("====================================\n\n");
-
-            Console.WriteLine("для продолжения нажмити любую клавишу...");
-            Console.ReadKey();
         }
     }
 }

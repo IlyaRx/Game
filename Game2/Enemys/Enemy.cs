@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game2
+namespace Game2.Enemys
 {
     abstract class Enemy
     {
@@ -22,13 +22,13 @@ namespace Game2
         public Enemy(string name, double level, double damage, double bustlevel)
         {
             Name = name;
-            HitPointsMax = 1000;
+            HitPointsMax = 100 * level;
             HitPoints = HitPointsMax;
             Level = level;
             ResistanceMagic = 0;
             ResistancePhysical = 0;
-            Damage = damage;
-            Bustlevel = bustlevel;
+            Damage = 15 * level + damage;
+            Bustlevel = bustlevel + level / 10;
         }
 
 

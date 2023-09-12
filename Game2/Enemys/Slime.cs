@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game2
+namespace Game2.Enemys
 {
     class Slime : Enemy
     {
@@ -18,13 +18,10 @@ namespace Game2
                      string color, 
                      double bustlevel = 0.3) : base(name, level, damage, bustlevel)
         {
-            Name = name;
-            Level = level;
             HitPointsMax = 100 * level;
             HitPoints = HitPointsMax;
-            ResistanceMagic = 5;
+            ResistanceMagic = 5 + level * 2;
             ResistancePhysical = 5;
-            Damage = damage;
             ColorSlime = color;
         }
 
